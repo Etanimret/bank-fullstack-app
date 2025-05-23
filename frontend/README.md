@@ -39,7 +39,3 @@ This is the frontend part of the Fullstack Application built using Angular.
 ## Usage
 
 This Angular application serves as the frontend for the backend API. You can interact with the backend services through the defined components and services in the application. 
-
-## Contributing
-
-Feel free to submit issues or pull requests for any improvements or features you would like to see!

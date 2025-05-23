@@ -8,4 +8,6 @@ public class SampleService {
     public String fetchSampleData() {
         return "Sample Data";
     }
+
+    //Insert bank statement Deposit Terminal 0101
 }

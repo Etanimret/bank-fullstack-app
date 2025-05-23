@@ -85,11 +85,3 @@ docker-compose up
 ```
 
 This will build and start both the backend and frontend services in Docker containers.
-
-## Contributing
-
-Feel free to submit issues or pull requests for improvements or bug fixes.
-
-## License
-
-This project is licensed under the MIT License.

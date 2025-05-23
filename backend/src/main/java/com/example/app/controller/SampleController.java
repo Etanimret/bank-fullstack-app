@@ -16,4 +16,12 @@ public class SampleController {
     public String getSampleData() {
         return sampleService.fetchSampleData();
     }
+
+
+    
+    //Inquiry statement
+
+    //Get account info
+
+    //Transfer money
 }
