@@ -12,7 +12,7 @@ public class SampleController {
     @Autowired
     private SampleService sampleService;
 
-    @GetMapping("/sample-data")
+    @GetMapping("/sample-data1")
     public String getSampleData() {
         return sampleService.fetchSampleData();
     }
