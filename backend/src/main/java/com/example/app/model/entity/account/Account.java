@@ -23,8 +23,8 @@ public class Account {
     @Column(name = "account_number", length = 7, nullable = false, unique = true)
     private String accountNumber;
 
-    @OneToOne
-    @JoinColumn(name = "customer_id", unique = true, nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
     @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")

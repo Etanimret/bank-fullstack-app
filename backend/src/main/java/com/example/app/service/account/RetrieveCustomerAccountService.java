@@ -15,20 +15,24 @@ public class RetrieveCustomerAccountService {
     @Autowired
     private AccountsRepository accountsRepository;
 
-    public CustomerDto invoke(String email) {
+    public CustomerDto invoke(String email, String password) {
         try {
             Customer customer = customersRepository.findByEmail(email);
             if (customer == null) {
-                throw new RuntimeException("Customer not found");
+                throw new RuntimeException("Email not found");
             }
-            Account account = accountsRepository.findByCustomerId(customer.getId());
-            return mapToCustomerDto(customer, account);
+            if (!customer.getPassword().equals(password)) {
+                throw new RuntimeException("Invalid email or password");
+            }
+            
+            List<Account> accounts = accountsRepository.findAllByCustomer_Id(customer.getId());
+            return mapToCustomerDto(customer, accounts);
         } catch (Exception e) {
             throw new RuntimeException("Error occurred while retrieving account");
         }
     }
 
-    private CustomerDto mapToCustomerDto(Customer customer, Account account) {
+    private CustomerDto mapToCustomerDto(Customer customer, List<Account> accounts) {
         CustomerDto customerDto = new CustomerDto();
         customerDto.setEmail(customer.getEmail());
         customerDto.setCitizenId(customer.getCitizenId());
@@ -36,7 +40,14 @@ public class RetrieveCustomerAccountService {
         customerDto.setAccountHolderNameTh(customer.getAccountHolderNameTh());
         customerDto.setAccountHolderNameEn(customer.getAccountHolderNameEn());
         customerDto.setPin(customer.getPin());
-        customerDto.setAccountNumber(account.getAccountNumber());
+        customerDto.setAccounts(accounts.stream()
+                .map(account -> {
+                    AccountDto accountDto = new AccountDto();
+                    accountDto.setId(account.getId());
+                    accountDto.setAccountNumber(account.getAccountNumber());
+                    return accountDto;
+                })
+                .collect(Collectors.toList()));
         return customerDto;
     }
 }

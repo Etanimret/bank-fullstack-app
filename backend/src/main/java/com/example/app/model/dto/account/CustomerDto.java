@@ -13,7 +13,7 @@ public class CustomerDto {
     private String accountHolderNameTh;
     private String accountHolderNameEn;
     private String pin;
-    private AccountDto account;
+    private List<AccountDto> accounts;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

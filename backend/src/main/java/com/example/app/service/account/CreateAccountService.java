@@ -12,27 +12,31 @@ public class CreateAccountService {
     @Autowired
     private AccountsRepository accountsRepository;
 
-    public String invoke(AccountDto accountDto) {
-        
+    @Autowired
+    private CustomersRepository customersRepository;
+
+    public String invoke(String citizenId) {
         String result = "";
 
         try {
-            result = initialAccount(accountDto);
+            Customer customer = customersRepository.findByCitizenId(citizenId)
+                .orElseThrow(() -> new RuntimeException("Customer not found with citizenId: " + citizenId));
+                
+            initialAccount(customer);
             result = "Success";
-            
         } catch (Exception e) {
             result = "Error occurred while saving account";
         }
-        accountsRepository.save(accountDto);
         return result;
     }
 
-    private Account initialAccount(AccountDto accountDto) {
+    private Account initialAccount(Customer customer) {
         Long seq = accountsRepository.getNextAccountNumberSeq();
         String accountNumber = String.format("%07d", seq);
 
         Account account = new Account();
         account.setAccountNumber(accountNumber);
+        account.setCustomer(customer);
         account.setCreatedAt(LocalDateTime.now());
 
         return accountsRepository.save(account);

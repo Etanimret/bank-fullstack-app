@@ -15,7 +15,7 @@ import com.example.app.repository.StatementsRepository;
 @Service
 public class SaveTransferService {
 
-        @Autowired
+    @Autowired
     private StatementsRepository statementsRepository;
 
     @Autowired

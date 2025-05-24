@@ -6,4 +6,5 @@ import com.example.app.repository.AccountsRepositoryCustom;
 
 public interface AccountsRepository extends JpaRepository<Account, Long>, AccountsRepositoryCustom {
     Account findByAccountNumber(String accountNumber);
+    List<Account> findAllByCustomer_Id(Long customerId);
 }
