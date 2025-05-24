@@ -1,14 +1,14 @@
 version: '3.8'
-
 services:
   backend:
+    image: bank-fullstack-app
     build:
       context: ./backend
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
-    networks:
-      - fullstack-network
+    depends_on:
+      - db
 
   frontend:
     build:
@@ -19,6 +19,16 @@ services:
     networks:
       - fullstack-network
 
-networks:
-  fullstack-network:
-    driver: bridge
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: bankdb
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:

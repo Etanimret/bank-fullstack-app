@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.app.service.SampleService;
 
 @RestController
-public class SampleController {
+public class StatmentsController {
 
     @Autowired
     private SampleService sampleService;
