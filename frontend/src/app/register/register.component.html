@@ -1,0 +1,110 @@
+<div style="max-width: 400px; margin: 2rem auto;">
+  <h2>Create Account</h2>
+  <form #regForm="ngForm" (ngSubmit)="register()" novalidate>
+    <div>
+      <label>Email:</label>
+      <input type="email" name="email" [(ngModel)]="customer.email"
+        required
+        pattern="^[A-Za-z0-9+_.-]+@(.+)$"
+        #email="ngModel"
+        [ngClass]="{'invalid': email.invalid && (email.dirty || email.touched)}" />
+      <div *ngIf="email.invalid && (email.dirty || email.touched)" class="error">
+        <span *ngIf="email.errors?.['required']">Email is required.</span>
+        <span *ngIf="email.errors?.['pattern']">Invalid email format.</span>
+      </div>
+    </div>
+    <div>
+      <label>Password:</label>
+      <input type="password" name="password" [(ngModel)]="customer.password"
+        required
+        pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,20}$"
+        #password="ngModel"
+        [ngClass]="{'invalid': password.invalid && (password.dirty || password.touched)}" />
+      <div *ngIf="password.invalid && (password.dirty || password.touched)" class="error">
+        <span *ngIf="password.errors?.['required']">Password is required.</span>
+        <span *ngIf="password.errors?.['pattern']">
+          8-20 chars, at least 1 uppercase, 1 lowercase, 1 digit and 1 special characters.
+        </span>
+      </div>
+    </div>
+    <div>
+      <label>Citizen ID:</label>
+      <input type="text" name="citizenId" [(ngModel)]="customer.citizenId"
+        required
+        pattern="^\d{13}$"
+        maxlength="13"
+        #citizenId="ngModel"
+        [ngClass]="{'invalid': citizenId.invalid && (citizenId.dirty || citizenId.touched)}" />
+      <div *ngIf="citizenId.invalid && (citizenId.dirty || citizenId.touched)" class="error">
+        <span *ngIf="citizenId.errors?.['required']">Citizen ID is required.</span>
+        <span *ngIf="citizenId.errors?.['pattern']">Citizen ID must be 13 digits.</span>
+      </div>
+    </div>
+    <div>
+      <label>Gender:</label>
+      <select name="gender" [(ngModel)]="customer.gender" required #gender="ngModel"
+        [ngClass]="{'invalid': gender.invalid && (gender.dirty || gender.touched)}">
+        <option value="" disabled selected>Select gender</option>
+        <option value="Male">Male</option>
+        <option value="MarriedFemale">Married Female</option>
+        <option value="SingleFemale">Single Female</option>
+        <option value="Other">Other</option>
+      </select>
+      <div *ngIf="gender.invalid && (gender.dirty || gender.touched)" class="error">
+        <span *ngIf="gender.errors?.['required']">Gender is required.</span>
+      </div>
+    </div>
+    <div>
+      <label>Account Holder Name (TH):</label>
+      <input type="text" name="accountHolderNameTh" [(ngModel)]="customer.accountHolderNameTh"
+        required
+        #accountHolderNameTh="ngModel"
+        [ngClass]="{'invalid': accountHolderNameTh.invalid && (accountHolderNameTh.dirty || accountHolderNameTh.touched)}" />
+      <div *ngIf="accountHolderNameTh.invalid && (accountHolderNameTh.dirty || accountHolderNameTh.touched)" class="error">
+        <span *ngIf="accountHolderNameTh.errors?.['required']">Thai name is required.</span>
+      </div>
+    </div>
+    <div>
+      <label>Account Holder Name (EN):</label>
+      <input type="text" name="accountHolderNameEn" [(ngModel)]="customer.accountHolderNameEn"
+        required
+        pattern="^[A-Za-z ]+$"
+        #accountHolderNameEn="ngModel"
+        [ngClass]="{'invalid': accountHolderNameEn.invalid && (accountHolderNameEn.dirty || accountHolderNameEn.touched)}" />
+      <div *ngIf="accountHolderNameEn.invalid && (accountHolderNameEn.dirty || accountHolderNameEn.touched)" class="error">
+        <span *ngIf="accountHolderNameEn.errors?.['required']">English name is required.</span>
+        <span *ngIf="accountHolderNameEn.errors?.['pattern']">English letters only.</span>
+      </div>
+    </div>
+    <div>
+      <label>PIN:</label>
+      <input type="password" name="pin" [(ngModel)]="customer.pin"
+        required
+        pattern="^\d{6}$"
+        maxlength="6"
+        #pin="ngModel"
+        [ngClass]="{'invalid': pin.invalid && (pin.dirty || pin.touched)}" />
+      <div *ngIf="pin.invalid && (pin.dirty || pin.touched)" class="error">
+        <span *ngIf="pin.errors?.['required']">PIN is required.</span>
+        <span *ngIf="pin.errors?.['pattern']">PIN must be exactly 6 digits.</span>
+      </div>
+    </div>
+    <button type="submit" [disabled]="regForm.invalid">Register</button>
+    <div *ngIf="registerError" style="color: red; margin-top: 1rem;">
+      {{ registerError }}
+    </div>
+    <div *ngIf="registerSuccess" style="color: green; margin-top: 1rem;">
+      {{ registerSuccess }}
+    </div>
+  </form>
+</div>
+
+<style>
+  .invalid {
+    border: 1px solid red;
+  }
+  .error {
+    color: red;
+    font-size: 0.9em;
+  }
+</style>

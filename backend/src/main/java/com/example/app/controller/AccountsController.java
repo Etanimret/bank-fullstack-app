@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.app.service.account.RegisterCustomerService;
-import com.example.app.service.account.CreateAccountService;
-import com.example.app.service.account.RetrieveCustomerAccountService;
-import com.example.app.service.account.LoginAccountService;
-import com.example.app.model.dto.CustomerDto;
+import com.example.app.model.dto.account.CustomerDto;
+import com.example.app.service.accounts.CreateAccountService;
+import com.example.app.service.accounts.LoginAccountService;
+import com.example.app.service.accounts.RegisterCustomerService;
+import com.example.app.service.accounts.RetrieveCustomerAccountService;
 
 @RestController
 public class AccountsController {
@@ -28,12 +28,12 @@ public class AccountsController {
 
     @PostMapping("/customer/register-account")
     public ResponseEntity<String> registerAccount(@RequestBody CustomerDto customerDto) {
-        return ResponseEntity.create(registerCustomerService.invoke(customerDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(registerCustomerService.invoke(customerDto));
     }
 
     @PostMapping("/teller/create-account")
     public ResponseEntity<String> createAccount(@RequestParam String citizenId) {
-        return ResponseEntity.create(createAccountService.invoke(citizenId));
+        return ResponseEntity.status(HttpStatus.CREATED).body(createAccountService.invoke(citizenId));
     }
 
     @GetMapping("/customer/retrieve-account")

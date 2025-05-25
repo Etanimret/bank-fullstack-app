@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class AccountDto {
-    private Long id;
+    private String id;
     private String accountNumber;
     private LocalDateTime createdAt;
 }

@@ -1,7 +1,7 @@
 package com.example.app.repository.impl;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import com.example.app.repository.AccountsRepositoryCustom;
 

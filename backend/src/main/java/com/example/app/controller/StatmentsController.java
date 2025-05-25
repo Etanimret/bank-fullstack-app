@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
 import java.util.List;
-import com.example.app.service.RetrieveAllStatementService;
-import com.example.app.service.SaveDepositService;
-import com.example.app.service.SaveWithdrawService;
-import com.example.app.service.SaveTransferService;
-import com.example.app.model.dto.StatementDto;
+import com.example.app.service.financial.RetrieveAllStatementService;
+import com.example.app.service.financial.SaveDepositService;
+import com.example.app.service.financial.SaveWithdrawService;
+import com.example.app.service.financial.SaveTransferService;
+import com.example.app.model.dto.financial.StatementDto;
 
 @RestController
 public class StatmentsController {

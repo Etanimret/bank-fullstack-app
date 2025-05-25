@@ -1,0 +1,18 @@
+<div style="max-width: 300px; margin: 2rem auto;">
+  <h2>Login</h2>
+  <form (ngSubmit)="login()">
+    <div>
+      <label>Email:</label>
+      <input type="email" [(ngModel)]="email" name="email" required />
+    </div>
+    <div>
+      <label>Password:</label>
+      <input type="password" [(ngModel)]="password" name="password" required />
+    </div>
+    <button type="submit">Login</button>
+    <div *ngIf="loginError" style="color: red; margin-top: 1rem;">
+      {{ loginError }}
+    </div>
+  </form>
+  <button style="margin-top: 1rem;" (click)="goToRegister()">Create Account</button>
+</div>

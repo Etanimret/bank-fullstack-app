@@ -8,8 +8,8 @@ import com.example.app.model.constant.ChannelCode;
 
 @Data
 public class StatementDto {
-    private Long id;
-    private Long accountId;
+    private String id;
+    private String accountId;
     private StatementCode code;
     private ChannelCode channel;
     private BigDecimal amount;

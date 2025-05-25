@@ -4,11 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import com.example.app.dto.StatementDto;
-import com.example.app.entity.Account;
-import com.example.app.entity.Statement;
-import com.example.app.enums.StatementCode;
-import com.example.app.enums.ChannelCode;
+import java.util.UUID;
+
+import com.example.app.model.dto.financial.StatementDto;
+import com.example.app.model.entity.accounts.Account;
+import com.example.app.model.entity.financial.Statement;
+import com.example.app.model.constant.StatementCode;
+import com.example.app.model.constant.ChannelCode;
 import com.example.app.repository.AccountsRepository;
 import com.example.app.repository.StatementsRepository;
 
@@ -26,30 +28,41 @@ public class SaveWithdrawService {
     }
 
     private StatementDto saveDeposit(String accountId, BigDecimal amount, String terminalId) {
-        Account account = accountsRepository.findByAccountId(accountId);
-    
-        if (account == null) {
-            throw new IllegalArgumentException("Invalid account ID");
-        }
+        UUID accountIdUuid = UUID.fromString(accountId);
+        Account account = accountsRepository.findById(accountIdUuid)
+            .orElseThrow(() -> new IllegalArgumentException("Invalid account ID"));
 
-        if (account.getBalance().compareTo(amount) < 0) {
+        Statement lastStatement = statementsRepository.findTopByAccountIdOrderByCreatedAtDesc(accountIdUuid);
+
+        if (lastStatement.getBalance().compareTo(amount) < 0) {
             throw new IllegalArgumentException("Insufficient balance for withdrawal");
         }
 
-        Statement lastStatement = statementsRepository.findTopByAccountIdOrderByCreatedAtDesc(accountId);
-
         Statement statement = new Statement();
-        statement.setAccountId(account.getId());
+        statement.setAccount(account);
         statement.setCode(StatementCode.A1.name());
-        statement.setChannel(ChannelCode.OCT.name());
+        statement.setChannel(ChannelCode.OTC.name());
         statement.setAmount(amount.negate()); // Withdraw is a negative amount
         statement.setBalance(lastStatement.getBalance().subtract(amount));
-        statement.setDescription("Withdrawal via Terminal " + terminalId);
+        statement.setRemarks("Withdrawal via Terminal " + terminalId);
         statement.setCreatedAt(LocalDateTime.now());
 
         statementsRepository.save(statement);
 
         return mapToStatementDto(statement);
+    }
+
+    private StatementDto mapToStatementDto(Statement statement) {
+        StatementDto dto = new StatementDto();
+        dto.setId(statement.getId().toString());
+        dto.setAccountId(statement.getAccount().getId().toString());
+        dto.setCode(StatementCode.valueOf(statement.getCode()));
+        dto.setChannel(ChannelCode.valueOf(statement.getChannel()));
+        dto.setAmount(statement.getAmount());
+        dto.setBalance(statement.getBalance());
+        dto.setRemarks(statement.getRemarks());
+        dto.setCreatedAt(statement.getCreatedAt());
+        return dto;
     }
 
     private void validateInput(String accountId, BigDecimal amount, String terminalId) {

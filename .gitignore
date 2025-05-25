@@ -1,0 +1,7 @@
+frontend/.angular
+.angular/
+*.class
+frontend/node_modules/.bin
+frontend/.angular/cache
+frontend/node_modules
+# Compiled output
