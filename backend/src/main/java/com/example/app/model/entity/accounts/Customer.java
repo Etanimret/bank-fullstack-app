@@ -2,13 +2,14 @@ package com.example.app.model.entity.accounts;
 
 import lombok.Data;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Table;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Column;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.CascadeType;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -51,6 +52,6 @@ public class Customer {
     @Column(name = "updated_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime updatedAt;
 
-    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
-    private Account account;
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
+    private List<Account> accounts;
 }

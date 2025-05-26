@@ -36,7 +36,7 @@ export class BankStatementComponent {
       `/api/financial/retrieveAllStatements`,
       {
         params: {
-          accountId: this.selectedAccount.id,
+          accountNumber: this.selectedAccount.accountNumber,
           fromDate: fromDate.toISOString(),
           toDate: toDate.toISOString()
         }

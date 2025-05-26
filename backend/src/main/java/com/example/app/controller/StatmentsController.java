@@ -32,27 +32,27 @@ public class StatmentsController {
     private VerifyTransferService verifyTransferService;
 
     @GetMapping("/financial/retrieveAllStatements")
-    public ResponseEntity<List<StatementDto>> getAllStatements(@RequestParam String accountId, @RequestParam LocalDateTime fromDate, @RequestParam LocalDateTime toDate) {
-        return ResponseEntity.ok(retrieveAllStatementService.invoke(accountId, fromDate, toDate));
+    public ResponseEntity<List<StatementDto>> getAllStatements(@RequestParam String accountNumber, @RequestParam LocalDateTime fromDate, @RequestParam LocalDateTime toDate) {
+        return ResponseEntity.ok(retrieveAllStatementService.invoke(accountNumber, fromDate, toDate));
     }
 
     @PostMapping("/financial/deposit")
-    public ResponseEntity<StatementDto> deposit(@RequestParam String accountId, @RequestParam BigDecimal amount, @RequestParam String terminalId) {
-        return ResponseEntity.ok(saveDepositService.invoke(accountId, amount, terminalId));
+    public ResponseEntity<StatementDto> deposit(@RequestParam String accountNumber, @RequestParam BigDecimal amount, @RequestParam String terminalId) {
+        return ResponseEntity.ok(saveDepositService.invoke(accountNumber, amount, terminalId));
     }
     
     @PostMapping("/financial/withdraw")
-    public ResponseEntity<StatementDto> withdraw(@RequestParam String accountId, @RequestParam BigDecimal amount, @RequestParam String terminalId) {
-        return ResponseEntity.ok(saveWithdrawService.invoke(accountId, amount, terminalId));
+    public ResponseEntity<StatementDto> withdraw(@RequestParam String accountNumber, @RequestParam BigDecimal amount, @RequestParam String terminalId) {
+        return ResponseEntity.ok(saveWithdrawService.invoke(accountNumber, amount, terminalId));
     }
 
     @PostMapping("/financial/transfer")
-    public ResponseEntity<StatementDto> transfer(@RequestParam String selfAccountId, @RequestParam BigDecimal amount, @RequestParam String targetAccountId) {
-        return ResponseEntity.ok(saveTransferService.invoke(selfAccountId, amount, targetAccountId));
+    public ResponseEntity<StatementDto> transfer(@RequestParam String selfAccountNumber, @RequestParam BigDecimal amount, @RequestParam String targetAccountNumber) {
+        return ResponseEntity.ok(saveTransferService.invoke(selfAccountNumber, amount, targetAccountNumber));
     }
 
     @PostMapping("/financial/verify-transfer")
-    public ResponseEntity<VerifyStatementDto> verifyTransfer(@RequestParam String selfAccountId, @RequestParam BigDecimal amount, @RequestParam String targetAccountId) {
-        return ResponseEntity.ok(verifyTransferService.invoke(selfAccountId, amount, targetAccountId));
+    public ResponseEntity<VerifyStatementDto> verifyTransfer(@RequestParam String selfAccountNumber, @RequestParam BigDecimal amount, @RequestParam String targetAccountNumber) {
+        return ResponseEntity.ok(verifyTransferService.invoke(selfAccountNumber, amount, targetAccountNumber));
     }
 }

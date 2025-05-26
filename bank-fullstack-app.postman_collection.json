@@ -1,0 +1,1437 @@
+{
+	"info": {
+		"_postman_id": "b7e0f76c-424b-47ad-9ecd-be9c6b5475d0",
+		"name": "bank-fullstack-app",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "45312068"
+	},
+	"item": [
+		{
+			"name": "Account",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"siripat_nik817@hotmail.com\",\r\n  \"password\": \"SSSss44$$\",\r\n  \"citizenId\": \"1234567890123\",\r\n  \"gender\": \"Male\",\r\n  \"accountHolderNameTh\": \"ศิริพัฒน์ คารวะวงศ์\",\r\n  \"accountHolderNameEn\": \"Siripat Karavawong\",\r\n  \"pin\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/customer/register-account",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"customer",
+								"register-account"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Register",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\": \"siripat_nik817@hotmail.com\",\r\n  \"password\": \"SSSss44$$\",\r\n  \"citizenId\": \"1234567890123\",\r\n  \"gender\": \"Male\",\r\n  \"accountHolderNameTh\": \"ศิริพัฒน์ คารวะวงศ์\",\r\n  \"accountHolderNameEn\": \"Siripat Karavawong\",\r\n  \"pin\": \"123456\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/customer/register-account",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"customer",
+										"register-account"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain;charset=UTF-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "16"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 06:40:41 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "Register success"
+						}
+					]
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/customer/login?email=siripat_nik817@hotmail.com&password=SSSss44$$",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"customer",
+								"login"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "siripat_nik817@hotmail.com"
+								},
+								{
+									"key": "password",
+									"value": "SSSss44$$"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/customer/login?email=siripat_nik817@hotmail.com&password=SSSss44$$",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"customer",
+										"login"
+									],
+									"query": [
+										{
+											"key": "email",
+											"value": "siripat_nik817@hotmail.com"
+										},
+										{
+											"key": "password",
+											"value": "SSSss44$$"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 06:40:56 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "true"
+						}
+					]
+				},
+				{
+					"name": "CreateAccount",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/teller/create-account?citizenId=1234567890123",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"teller",
+								"create-account"
+							],
+							"query": [
+								{
+									"key": "citizenId",
+									"value": "1234567890123"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "CreateAccount",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/teller/create-account?citizenId=1234567890123",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"teller",
+										"create-account"
+									],
+									"query": [
+										{
+											"key": "citizenId",
+											"value": "1234567890123"
+										}
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain;charset=UTF-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "58"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 06:51:30 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "Successfully created account. New account number : 0000001"
+						}
+					]
+				},
+				{
+					"name": "RetrieveAccountInfo",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"siripat_nik817@hotmail.com\",\r\n  \"password\": \"SSSss44$$\",\r\n  \"citizenId\": \"1234567890123\",\r\n  \"gender\": \"Male\",\r\n  \"accountHolderNameTh\": \"ศิริพัฒน์ คารวะวงศ์\",\r\n  \"accountHolderNameEn\": \"Siripat Karavawong\",\r\n  \"pin\": \"123456\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/customer/retrieve-account?email=siripat_nik817@hotmail.com&password=SSSss44$$",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"customer",
+								"retrieve-account"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "siripat_nik817@hotmail.com"
+								},
+								{
+									"key": "password",
+									"value": "SSSss44$$"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "RetrieveAccountInfo",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\": \"siripat_nik817@hotmail.com\",\r\n  \"password\": \"SSSss44$$\",\r\n  \"citizenId\": \"1234567890123\",\r\n  \"gender\": \"Male\",\r\n  \"accountHolderNameTh\": \"ศิริพัฒน์ คารวะวงศ์\",\r\n  \"accountHolderNameEn\": \"Siripat Karavawong\",\r\n  \"pin\": \"123456\"\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/customer/retrieve-account?email=siripat_nik817@hotmail.com&password=SSSss44$$",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"customer",
+										"retrieve-account"
+									],
+									"query": [
+										{
+											"key": "email",
+											"value": "siripat_nik817@hotmail.com"
+										},
+										{
+											"key": "password",
+											"value": "SSSss44$$"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 08:13:10 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"ed0fe2e8-4e71-48b8-925d-d696036ea123\",\n    \"email\": \"siripat_nik817@hotmail.com\",\n    \"password\": \"*********\",\n    \"citizenId\": \"1234567890123\",\n    \"gender\": \"Male\",\n    \"accountHolderNameTh\": \"ศิริพัฒน์ คารวะวงศ์\",\n    \"accountHolderNameEn\": \"Siripat Karavawong\",\n    \"pin\": \"******\",\n    \"accounts\": [\n        {\n            \"id\": \"cd0d3ed0-30c7-4a7f-9a1b-1017c34fb1b7\",\n            \"accountNumber\": \"0000001\",\n            \"balance\": 0,\n            \"createdAt\": \"2025-05-26T08:13:05.727031\"\n        }\n    ],\n    \"createdAt\": \"2025-05-26T08:12:59.491042\",\n    \"updatedAt\": \"2025-05-26T08:12:59.491206\"\n}"
+						}
+					]
+				},
+				{
+					"name": "RetrieveCustomerInfo",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"siripat_nik817@hotmail.com\",\r\n  \"password\": \"SSSss44$$\",\r\n  \"citizenId\": \"1234567890123\",\r\n  \"gender\": \"Male\",\r\n  \"accountHolderNameTh\": \"ศิริพัฒน์ คารวะวงศ์\",\r\n  \"accountHolderNameEn\": \"Siripat Karavawong\",\r\n  \"pin\": \"123456\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/teller/retrieve-account?citizenId=1234567890123",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"teller",
+								"retrieve-account"
+							],
+							"query": [
+								{
+									"key": "citizenId",
+									"value": "1234567890123"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "RetrieveCustomerInfo",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\": \"siripat_nik817@hotmail.com\",\r\n  \"password\": \"SSSss44$$\",\r\n  \"citizenId\": \"1234567890123\",\r\n  \"gender\": \"Male\",\r\n  \"accountHolderNameTh\": \"ศิริพัฒน์ คารวะวงศ์\",\r\n  \"accountHolderNameEn\": \"Siripat Karavawong\",\r\n  \"pin\": \"123456\"\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/teller/retrieve-account?citizenId=1234567890123",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"teller",
+										"retrieve-account"
+									],
+									"query": [
+										{
+											"key": "citizenId",
+											"value": "1234567890123"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 08:15:07 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"ed0fe2e8-4e71-48b8-925d-d696036ea123\",\n    \"email\": \"siripat_nik817@hotmail.com\",\n    \"password\": null,\n    \"citizenId\": \"1234567890123\",\n    \"gender\": \"Male\",\n    \"accountHolderNameTh\": \"ศิริพัฒน์ คารวะวงศ์\",\n    \"accountHolderNameEn\": \"Siripat Karavawong\",\n    \"pin\": null,\n    \"accounts\": [\n        {\n            \"id\": \"cd0d3ed0-30c7-4a7f-9a1b-1017c34fb1b7\",\n            \"accountNumber\": \"0000001\",\n            \"balance\": null,\n            \"createdAt\": null\n        }\n    ],\n    \"createdAt\": null,\n    \"updatedAt\": null\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Financial",
+			"item": [
+				{
+					"name": "TellerDeposit",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"siripat_nik817@hotmail.com\",\r\n  \"password\": \"SSSss44$$\",\r\n  \"citizenId\": \"1234567890123\",\r\n  \"gender\": \"Male\",\r\n  \"accountHolderNameTh\": \"ศิริพัฒน์ คารวะวงศ์\",\r\n  \"accountHolderNameEn\": \"Siripat Karavawong\",\r\n  \"pin\": \"123456\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/financial/deposit?accountNumber=0000001&amount=50&terminalId=0001",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"financial",
+								"deposit"
+							],
+							"query": [
+								{
+									"key": "accountNumber",
+									"value": "0000001"
+								},
+								{
+									"key": "amount",
+									"value": "50"
+								},
+								{
+									"key": "terminalId",
+									"value": "0001"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "TellerDeposit",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\": \"siripat_nik817@hotmail.com\",\r\n  \"password\": \"SSSss44$$\",\r\n  \"citizenId\": \"1234567890123\",\r\n  \"gender\": \"Male\",\r\n  \"accountHolderNameTh\": \"ศิริพัฒน์ คารวะวงศ์\",\r\n  \"accountHolderNameEn\": \"Siripat Karavawong\",\r\n  \"pin\": \"123456\"\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/financial/deposit?accountNumber=0000001&amount=50&terminalId=0001",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"financial",
+										"deposit"
+									],
+									"query": [
+										{
+											"key": "accountNumber",
+											"value": "0000001"
+										},
+										{
+											"key": "amount",
+											"value": "50"
+										},
+										{
+											"key": "terminalId",
+											"value": "0001"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 09:19:46 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"f340308d-1d18-4d16-9656-226117a962d5\",\n    \"accountId\": \"3387ee88-0e2a-44e2-b964-773dc5161bc3\",\n    \"code\": \"A0\",\n    \"channel\": \"OTC\",\n    \"amount\": 50,\n    \"balance\": 50,\n    \"remarks\": \"Deposit via Terminal 0001\",\n    \"createdAt\": \"2025-05-26T09:19:46.494510887\"\n}"
+						}
+					]
+				},
+				{
+					"name": "TellerWithdraw",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"siripat_nik817@hotmail.com\",\r\n  \"password\": \"SSSss44$$\",\r\n  \"citizenId\": \"1234567890123\",\r\n  \"gender\": \"Male\",\r\n  \"accountHolderNameTh\": \"ศิริพัฒน์ คารวะวงศ์\",\r\n  \"accountHolderNameEn\": \"Siripat Karavawong\",\r\n  \"pin\": \"123456\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/financial/withdraw?accountNumber=0000001&amount=50&terminalId=0001",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"financial",
+								"withdraw"
+							],
+							"query": [
+								{
+									"key": "accountNumber",
+									"value": "0000001"
+								},
+								{
+									"key": "amount",
+									"value": "50"
+								},
+								{
+									"key": "terminalId",
+									"value": "0001"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "TellerWithdraw",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\": \"siripat_nik817@hotmail.com\",\r\n  \"password\": \"SSSss44$$\",\r\n  \"citizenId\": \"1234567890123\",\r\n  \"gender\": \"Male\",\r\n  \"accountHolderNameTh\": \"ศิริพัฒน์ คารวะวงศ์\",\r\n  \"accountHolderNameEn\": \"Siripat Karavawong\",\r\n  \"pin\": \"123456\"\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/financial/withdraw?accountNumber=0000001&amount=50&terminalId=0001",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"financial",
+										"withdraw"
+									],
+									"query": [
+										{
+											"key": "accountNumber",
+											"value": "0000001"
+										},
+										{
+											"key": "amount",
+											"value": "50"
+										},
+										{
+											"key": "terminalId",
+											"value": "0001"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 09:21:34 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"3997a39a-6449-4328-b4c4-10bbe307aabf\",\n    \"accountId\": \"3387ee88-0e2a-44e2-b964-773dc5161bc3\",\n    \"code\": \"A1\",\n    \"channel\": \"OTC\",\n    \"amount\": -50,\n    \"balance\": 0,\n    \"remarks\": \"Withdraw via Terminal 0001\",\n    \"createdAt\": \"2025-05-26T09:21:34.071323447\"\n}"
+						}
+					]
+				},
+				{
+					"name": "CustomerVerifyTransfer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"siripat_nik817@hotmail.com\",\r\n  \"password\": \"SSSss44$$\",\r\n  \"citizenId\": \"1234567890123\",\r\n  \"gender\": \"Male\",\r\n  \"accountHolderNameTh\": \"ศิริพัฒน์ คารวะวงศ์\",\r\n  \"accountHolderNameEn\": \"Siripat Karavawong\",\r\n  \"pin\": \"123456\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/financial/verify-transfer?selfAccountNumber=0000001&amount=50&targetAccountNumber=0000002",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"financial",
+								"verify-transfer"
+							],
+							"query": [
+								{
+									"key": "selfAccountNumber",
+									"value": "0000001"
+								},
+								{
+									"key": "amount",
+									"value": "50"
+								},
+								{
+									"key": "targetAccountNumber",
+									"value": "0000002"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "CustomerVerifyTransfer",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\": \"siripat_nik817@hotmail.com\",\r\n  \"password\": \"SSSss44$$\",\r\n  \"citizenId\": \"1234567890123\",\r\n  \"gender\": \"Male\",\r\n  \"accountHolderNameTh\": \"ศิริพัฒน์ คารวะวงศ์\",\r\n  \"accountHolderNameEn\": \"Siripat Karavawong\",\r\n  \"pin\": \"123456\"\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/financial/verify-transfer?selfAccountNumber=0000001&amount=50&targetAccountNumber=0000002",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"financial",
+										"verify-transfer"
+									],
+									"query": [
+										{
+											"key": "selfAccountNumber",
+											"value": "0000001"
+										},
+										{
+											"key": "amount",
+											"value": "50"
+										},
+										{
+											"key": "targetAccountNumber",
+											"value": "0000002"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 09:40:52 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"isValid\": true,\n    \"message\": \"Valid\",\n    \"selfName\": \"Siripat Karavawong\",\n    \"selfAccountNumber\": \"0000001\",\n    \"amount\": 50,\n    \"targetName\": \"Siripat Karavawong\",\n    \"targetAccountNumber\": \"0000002\"\n}"
+						}
+					]
+				},
+				{
+					"name": "CustomerTransfer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"siripat_nik817@hotmail.com\",\r\n  \"password\": \"SSSss44$$\",\r\n  \"citizenId\": \"1234567890123\",\r\n  \"gender\": \"Male\",\r\n  \"accountHolderNameTh\": \"ศิริพัฒน์ คารวะวงศ์\",\r\n  \"accountHolderNameEn\": \"Siripat Karavawong\",\r\n  \"pin\": \"123456\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/financial/transfer?selfAccountNumber=0000001&amount=50&targetAccountNumber=0000002",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"financial",
+								"transfer"
+							],
+							"query": [
+								{
+									"key": "selfAccountNumber",
+									"value": "0000001"
+								},
+								{
+									"key": "amount",
+									"value": "50"
+								},
+								{
+									"key": "targetAccountNumber",
+									"value": "0000002"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "CustomerTransfer",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\": \"siripat_nik817@hotmail.com\",\r\n  \"password\": \"SSSss44$$\",\r\n  \"citizenId\": \"1234567890123\",\r\n  \"gender\": \"Male\",\r\n  \"accountHolderNameTh\": \"ศิริพัฒน์ คารวะวงศ์\",\r\n  \"accountHolderNameEn\": \"Siripat Karavawong\",\r\n  \"pin\": \"123456\"\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/financial/transfer?selfAccountNumber=0000001&amount=50&targetAccountNumber=0000002",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"financial",
+										"transfer"
+									],
+									"query": [
+										{
+											"key": "selfAccountNumber",
+											"value": "0000001"
+										},
+										{
+											"key": "amount",
+											"value": "50"
+										},
+										{
+											"key": "targetAccountNumber",
+											"value": "0000002"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 09:41:02 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"16018887-7ac0-4228-a0d3-3e2967bc7e8c\",\n    \"accountId\": \"61ffb1fc-2cf1-4662-8053-cb469ad4d0dc\",\n    \"code\": \"A2\",\n    \"channel\": \"ATS\",\n    \"amount\": -50,\n    \"balance\": 50,\n    \"remarks\": \"Transfer to x0002 Mr. Siripat Karavawong\",\n    \"createdAt\": \"2025-05-26T09:41:02.670069263\"\n}"
+						}
+					]
+				},
+				{
+					"name": "CustomerRetriveAllStatement",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"siripat_nik817@hotmail.com\",\r\n  \"password\": \"SSSss44$$\",\r\n  \"citizenId\": \"1234567890123\",\r\n  \"gender\": \"Male\",\r\n  \"accountHolderNameTh\": \"ศิริพัฒน์ คารวะวงศ์\",\r\n  \"accountHolderNameEn\": \"Siripat Karavawong\",\r\n  \"pin\": \"123456\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/financial/retrieveAllStatements?accountNumber=0000001&fromDate=2025-05-01T00:00:00&toDate=2025-05-31T23:59:59",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"financial",
+								"retrieveAllStatements"
+							],
+							"query": [
+								{
+									"key": "accountNumber",
+									"value": "0000001"
+								},
+								{
+									"key": "fromDate",
+									"value": "2025-05-01T00:00:00"
+								},
+								{
+									"key": "toDate",
+									"value": "2025-05-31T23:59:59"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "CustomerTransfer",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\": \"siripat_nik817@hotmail.com\",\r\n  \"password\": \"SSSss44$$\",\r\n  \"citizenId\": \"1234567890123\",\r\n  \"gender\": \"Male\",\r\n  \"accountHolderNameTh\": \"ศิริพัฒน์ คารวะวงศ์\",\r\n  \"accountHolderNameEn\": \"Siripat Karavawong\",\r\n  \"pin\": \"123456\"\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/financial/transfer?selfAccountNumber=0000001&amount=50&targetAccountNumber=0000002",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"financial",
+										"transfer"
+									],
+									"query": [
+										{
+											"key": "selfAccountNumber",
+											"value": "0000001"
+										},
+										{
+											"key": "amount",
+											"value": "50"
+										},
+										{
+											"key": "targetAccountNumber",
+											"value": "0000002"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 09:41:02 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"16018887-7ac0-4228-a0d3-3e2967bc7e8c\",\n    \"accountId\": \"61ffb1fc-2cf1-4662-8053-cb469ad4d0dc\",\n    \"code\": \"A2\",\n    \"channel\": \"ATS\",\n    \"amount\": -50,\n    \"balance\": 50,\n    \"remarks\": \"Transfer to x0002 Mr. Siripat Karavawong\",\n    \"createdAt\": \"2025-05-26T09:41:02.670069263\"\n}"
+						},
+						{
+							"name": "CustomerRetriveAllStatement",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\": \"siripat_nik817@hotmail.com\",\r\n  \"password\": \"SSSss44$$\",\r\n  \"citizenId\": \"1234567890123\",\r\n  \"gender\": \"Male\",\r\n  \"accountHolderNameTh\": \"ศิริพัฒน์ คารวะวงศ์\",\r\n  \"accountHolderNameEn\": \"Siripat Karavawong\",\r\n  \"pin\": \"123456\"\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/financial/retrieveAllStatements?accountNumber=0000001&fromDate=2025-05-01T00:00:00&toDate=2025-05-31T23:59:59",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"financial",
+										"retrieveAllStatements"
+									],
+									"query": [
+										{
+											"key": "accountNumber",
+											"value": "0000001"
+										},
+										{
+											"key": "fromDate",
+											"value": "2025-05-01T00:00:00"
+										},
+										{
+											"key": "toDate",
+											"value": "2025-05-31T23:59:59"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 10:06:38 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": \"2cc60f59-cdce-4e40-8466-0083f0d0248d\",\n        \"accountId\": \"022714a1-9e6c-4633-a569-c8178d83f41b\",\n        \"code\": \"A0\",\n        \"channel\": \"OTC\",\n        \"amount\": 50,\n        \"balance\": 50,\n        \"remarks\": \"Deposit via Terminal 0001\",\n        \"createdAt\": \"2025-05-26T09:56:07.096723\"\n    },\n    {\n        \"id\": \"5b712183-e3a3-44c4-9013-b1a3b1c9772e\",\n        \"accountId\": \"022714a1-9e6c-4633-a569-c8178d83f41b\",\n        \"code\": \"A0\",\n        \"channel\": \"OTC\",\n        \"amount\": 50,\n        \"balance\": 100,\n        \"remarks\": \"Deposit via Terminal 0001\",\n        \"createdAt\": \"2025-05-26T09:56:08.183225\"\n    },\n    {\n        \"id\": \"793d01d9-2ac0-4c00-9a3e-108f4d0979a7\",\n        \"accountId\": \"022714a1-9e6c-4633-a569-c8178d83f41b\",\n        \"code\": \"A0\",\n        \"channel\": \"OTC\",\n        \"amount\": 50,\n        \"balance\": 150,\n        \"remarks\": \"Deposit via Terminal 0001\",\n        \"createdAt\": \"2025-05-26T09:56:09.243686\"\n    },\n    {\n        \"id\": \"21a44208-d3de-4d55-abd7-ad999c70c69c\",\n        \"accountId\": \"022714a1-9e6c-4633-a569-c8178d83f41b\",\n        \"code\": \"A0\",\n        \"channel\": \"OTC\",\n        \"amount\": 50,\n        \"balance\": 200,\n        \"remarks\": \"Deposit via Terminal 0001\",\n        \"createdAt\": \"2025-05-26T09:56:10.632359\"\n    },\n    {\n        \"id\": \"4bb5c314-de5b-4aee-95bc-ee6013996605\",\n        \"accountId\": \"022714a1-9e6c-4633-a569-c8178d83f41b\",\n        \"code\": \"A1\",\n        \"channel\": \"OTC\",\n        \"amount\": -50,\n        \"balance\": 150,\n        \"remarks\": \"Withdraw via Terminal 0001\",\n        \"createdAt\": \"2025-05-26T09:56:15.103154\"\n    },\n    {\n        \"id\": \"e8928cbf-482d-4763-8f25-3783e12f17c5\",\n        \"accountId\": \"022714a1-9e6c-4633-a569-c8178d83f41b\",\n        \"code\": \"A0\",\n        \"channel\": \"OTC\",\n        \"amount\": 50,\n        \"balance\": 200,\n        \"remarks\": \"Deposit via Terminal 0001\",\n        \"createdAt\": \"2025-05-26T09:56:18.689874\"\n    },\n    {\n        \"id\": \"78f7241c-c356-4806-8911-03faaa4d82ef\",\n        \"accountId\": \"022714a1-9e6c-4633-a569-c8178d83f41b\",\n        \"code\": \"A2\",\n        \"channel\": \"ATS\",\n        \"amount\": -50,\n        \"balance\": 150,\n        \"remarks\": \"Transfer to x0002 Mr. Siripat Karavawong\",\n        \"createdAt\": \"2025-05-26T09:56:26.368885\"\n    },\n    {\n        \"id\": \"e9bbe8cb-4d91-45e2-b754-cae0e40e999c\",\n        \"accountId\": \"022714a1-9e6c-4633-a569-c8178d83f41b\",\n        \"code\": \"A2\",\n        \"channel\": \"ATS\",\n        \"amount\": -50,\n        \"balance\": 100,\n        \"remarks\": \"Transfer to x0002 Mr. Siripat Karavawong\",\n        \"createdAt\": \"2025-05-26T09:56:27.627118\"\n    }\n]"
+						}
+					]
+				}
+			]
+		}
+	]
+}

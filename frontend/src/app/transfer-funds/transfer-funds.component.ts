@@ -50,9 +50,9 @@ export class TransferFundsComponent {
 
     this.isVerifying = true;
     const params = new HttpParams()
-      .set('selfAccountId', this.accountNumber)
+      .set('selfAccountNumber', this.accountNumber)
       .set('amount', this.amount)
-      .set('targetAccountId', this.targetAccountNumber);
+      .set('targetAccountNumber', this.targetAccountNumber);
 
     this.http.post<any>('/api/financial/verify-transfer', null, { params })
       .subscribe({
@@ -85,9 +85,9 @@ export class TransferFundsComponent {
 
     this.isTransferring = true;
     const params = new HttpParams()
-      .set('selfAccountId', this.accountNumber)
+      .set('selfAccountNumber', this.accountNumber)
       .set('amount', this.amount)
-      .set('targetAccountId', this.targetAccountNumber);
+      .set('targetAccountNumber', this.targetAccountNumber);
 
     this.http.post<any>('/api/financial/transfer', null, { params })
       .subscribe({

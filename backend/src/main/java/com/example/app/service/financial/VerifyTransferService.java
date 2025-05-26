@@ -1,8 +1,9 @@
 package com.example.app.service.financial;
 
 import java.math.BigDecimal;
-import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,7 @@ import com.example.app.repository.StatementsRepository;
 
 @Service
 public class VerifyTransferService {
+    private static final Logger logger = LoggerFactory.getLogger(VerifyTransferService.class);
 
     @Autowired
     private StatementsRepository statementsRepository;
@@ -24,32 +26,41 @@ public class VerifyTransferService {
 
     private String VALID_STATE = "Valid";
 
-    public VerifyStatementDto invoke(String selfAccountId, BigDecimal amount, String targetAccountId) {
-        return verifyTransfer(selfAccountId, amount, targetAccountId);
+    public VerifyStatementDto invoke(String selfAccountNumber, BigDecimal amount, String targetAccountNumber) {
+        return verifyTransfer(selfAccountNumber, amount, targetAccountNumber);
     }
 
-    private VerifyStatementDto verifyTransfer(String selfAccountId, BigDecimal amount, String targetAccountId) {
+    private VerifyStatementDto verifyTransfer(String selfAccountNumber, BigDecimal amount, String targetAccountNumber) {
         String message = "";
-        message = validateInput(selfAccountId, amount, targetAccountId);
+        message = validateInput(selfAccountNumber, amount, targetAccountNumber);
 
         VerifyStatementDto response = new VerifyStatementDto();
 
         if(message.isEmpty()) {
-            UUID selfAccountUuid = UUID.fromString(selfAccountId);
-            UUID targetAccountUuid = UUID.fromString(targetAccountId);
-
             try {
-                Account selfAccount = accountsRepository.findById(selfAccountUuid)
-                    .orElseThrow(() -> new IllegalArgumentException("Invalid account ID"));
-                Account targetAccount = accountsRepository.findById(targetAccountUuid)
-                    .orElseThrow(() -> new IllegalArgumentException("Invalid target account ID"));
+                Account selfAccount = accountsRepository.findByAccountNumber(selfAccountNumber);
+                if (selfAccount == null) {
+                    logger.error("Invalid account number: {}", selfAccountNumber);
+                    throw new IllegalArgumentException("Invalid account number");
+                }
+
+                Account targetAccount = accountsRepository.findByAccountNumber(targetAccountNumber);
+                if (targetAccount == null) {
+                    logger.error("Invalid target account number: {}", targetAccountNumber);
+                    throw new IllegalArgumentException("Invalid target account number");
+                }
 
                 Customer selfCustomer = selfAccount.getCustomer();
                 Customer targetCustomer = targetAccount.getCustomer();
 
                 Statement lastSelfStatement = statementsRepository.findTopByAccountIdOrderByCreatedAtDesc(selfAccount.getId());
+                if (lastSelfStatement == null) {
+                    lastSelfStatement = new Statement();
+                    lastSelfStatement.setBalance(BigDecimal.ZERO);
+                }
 
                 if (lastSelfStatement.getBalance().compareTo(amount) < 0) {
+                    logger.error("Insufficient balance for transfer");
                     message = "Insufficient balance for transfer";
                 } else {
                     message = VALID_STATE;
@@ -63,6 +74,7 @@ public class VerifyTransferService {
                 response.setTargetName(targetCustomer.getAccountHolderNameEn());
                 response.setTargetAccountNumber(targetAccount.getAccountNumber());
             } catch (Exception e) {
+                logger.error("Account ID not found");
                 message = "Account ID not found";
             }
         } else {
@@ -72,17 +84,21 @@ public class VerifyTransferService {
         return response;
     }
 
-    private String validateInput(String selfAccountId, BigDecimal amount, String targetAccountId) {
-        if (selfAccountId == null || selfAccountId.isEmpty()) {
-            return "Account ID cannot be null or empty";
+    private String validateInput(String selfAccountNumber, BigDecimal amount, String targetAccountNumber) {
+        if (selfAccountNumber == null || targetAccountNumber.isEmpty()) {
+            logger.error("Account Number cannot be null or empty");
+            return "Account Number cannot be null or empty";
         }
         if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
+            logger.error("Amount must be greater than zero");
             return "Amount must be greater than zero";
         }
-        if (targetAccountId == null || targetAccountId.isEmpty()) {
-            return "Target Account ID cannot be null or empty";
+        if (targetAccountNumber == null || targetAccountNumber.isEmpty()) {
+            logger.error("Target Account Number cannot be null or empty");
+            return "Target Account Number cannot be null or empty";
         }
-        if (selfAccountId.equals(targetAccountId)) {
+        if (selfAccountNumber.equals(targetAccountNumber)) {
+            logger.error("Cannot transfer to the same account");
             return "Cannot transfer to the same account";
         }
         return "";

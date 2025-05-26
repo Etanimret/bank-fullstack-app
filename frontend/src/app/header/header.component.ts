@@ -14,4 +14,13 @@ export class HeaderComponent {
     this.authService.clearCredentials();
     this.router.navigate(['/login']);
   }
+
+  goHome() {
+    this.router.navigate(['/']);
+  }
+
+  get isSpecialRoute(): boolean {
+    const specialRoutes = ['/teller-transaction', '/teller-create-account', '/register'];
+    return specialRoutes.includes(this.router.url);
+  }
 }

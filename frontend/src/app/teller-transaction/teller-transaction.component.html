@@ -1,25 +1,38 @@
-<div>
-  <label>
-    <input type="radio" name="type" value="deposit" [(ngModel)]="type" /> Deposit
-  </label>
-  <label>
-    <input type="radio" name="type" value="withdraw" [(ngModel)]="type" /> Withdraw
-  </label>
-</div>
+<form class="form-group" style="max-width:400px; margin:32px auto;">
+  <div style="display:flex; gap:24px; margin-bottom:18px;">
+    <label style="font-weight:400;">
+      <input type="radio" name="type" value="deposit" [(ngModel)]="type" /> Deposit
+    </label>
+    <label style="font-weight:400;">
+      <input type="radio" name="type" value="withdraw" [(ngModel)]="type" /> Withdraw
+    </label>
+  </div>
 
-<div>
-  <label>Account ID (7 digits):</label>
-  <input [(ngModel)]="accountId" maxlength="7" />
+  <div style="margin-bottom:16px;">
+  <label for="accountNumber">Account Number (7 digits):</label>
+  <input id="accountNumber" [(ngModel)]="accountNumber" name="accountNumber" maxlength="7" />
 </div>
-<div>
-  <label>Amount (2 decimals):</label>
-  <input [(ngModel)]="amount" />
-</div>
-<div>
-  <label>Terminal ID (4 digits):</label>
-  <input [(ngModel)]="terminalId" maxlength="4" />
-</div>
-<button (click)="confirm()">Confirm</button>
+  <div style="margin-bottom:16px;">
+    <label for="amount">Amount (2 decimals):</label>
+    <input id="amount" [(ngModel)]="amount" name="amount" />
+  </div>
+  <div style="margin-bottom:24px;">
+    <label for="terminalId">Terminal ID (4 digits):</label>
+    <input
+      id="terminalId"
+      [(ngModel)]="terminalId"
+      name="terminalId"
+      maxlength="4"
+      minlength="4"
+      pattern="^[0-9]{4}$"
+      required
+    />
+    <div *ngIf="terminalId && terminalId.length !== 4" style="color:red;">
+      Terminal ID must be 4 digits.
+    </div>
+  </div>
+  <button type="button" (click)="confirm()">Confirm</button>
 
-<div *ngIf="message" style="color:green">{{ message }}</div>
-<div *ngIf="error" style="color:red">{{ error }}</div>
+  <div *ngIf="message" style="color:green; margin-top:12px;">{{ message }}</div>
+  <div *ngIf="error" style="color:red; margin-top:12px;">{{ error }}</div>
+</form>

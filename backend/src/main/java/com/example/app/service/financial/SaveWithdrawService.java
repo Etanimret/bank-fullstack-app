@@ -1,10 +1,11 @@
 package com.example.app.service.financial;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 import com.example.app.model.dto.financial.StatementDto;
 import com.example.app.model.entity.accounts.Account;
@@ -16,26 +17,35 @@ import com.example.app.repository.StatementsRepository;
 
 @Service
 public class SaveWithdrawService {
+    private static final Logger logger = LoggerFactory.getLogger(SaveWithdrawService.class);
+
     @Autowired
     private StatementsRepository statementsRepository;
 
     @Autowired
     private AccountsRepository accountsRepository;
 
-    public StatementDto invoke(String accountId, BigDecimal amount, String terminalId) {
-        validateInput(accountId, amount, terminalId);
-        return saveDeposit(accountId, amount, terminalId);
+    public StatementDto invoke(String accountNumber, BigDecimal amount, String terminalId) {
+        validateInput(accountNumber, amount, terminalId);
+        return saveDeposit(accountNumber, amount, terminalId);
     }
 
-    private StatementDto saveDeposit(String accountId, BigDecimal amount, String terminalId) {
-        UUID accountIdUuid = UUID.fromString(accountId);
-        Account account = accountsRepository.findById(accountIdUuid)
-            .orElseThrow(() -> new IllegalArgumentException("Invalid account ID"));
+    private StatementDto saveDeposit(String accountNumber, BigDecimal amount, String terminalId) {
+        Account account = accountsRepository.findByAccountNumber(accountNumber);
+        if (account == null) {
+            logger.error("Invalid account number: {}", accountNumber);
+            throw new IllegalArgumentException("Invalid account number");
+        }
 
-        Statement lastStatement = statementsRepository.findTopByAccountIdOrderByCreatedAtDesc(accountIdUuid);
+        Statement lastStatement = statementsRepository.findTopByAccountIdOrderByCreatedAtDesc(account.getId());
+        if (lastStatement == null) {
+            lastStatement = new Statement();
+            lastStatement.setBalance(BigDecimal.ZERO);
+        }
 
         if (lastStatement.getBalance().compareTo(amount) < 0) {
-            throw new IllegalArgumentException("Insufficient balance for withdrawal");
+            logger.error("Insufficient balance for Withdraw");
+            throw new IllegalArgumentException("Insufficient balance for Withdraw");
         }
 
         Statement statement = new Statement();
@@ -44,11 +54,12 @@ public class SaveWithdrawService {
         statement.setChannel(ChannelCode.OTC.name());
         statement.setAmount(amount.negate()); // Withdraw is a negative amount
         statement.setBalance(lastStatement.getBalance().subtract(amount));
-        statement.setRemarks("Withdrawal via Terminal " + terminalId);
+        statement.setRemarks("Withdraw via Terminal " + terminalId);
         statement.setCreatedAt(LocalDateTime.now());
 
+        logger.info("Start save statement");
         statementsRepository.save(statement);
-
+        logger.info("Save statement completed");
         return mapToStatementDto(statement);
     }
 
@@ -65,14 +76,17 @@ public class SaveWithdrawService {
         return dto;
     }
 
-    private void validateInput(String accountId, BigDecimal amount, String terminalId) {
-        if (accountId == null || accountId.isEmpty()) {
-            throw new IllegalArgumentException("Account ID cannot be null or empty");
+    private void validateInput(String accountNumber, BigDecimal amount, String terminalId) {
+        if (accountNumber == null || accountNumber.isEmpty()) {
+            logger.error("Account Number cannot be null or empty");
+            throw new IllegalArgumentException("Account Number cannot be null or empty");
         }
         if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
+            logger.error("Amount must be greater than zero");
             throw new IllegalArgumentException("Amount must be greater than zero");
         }
         if (terminalId == null || terminalId.isEmpty()) {
+            logger.error("Terminal ID cannot be null or empty");
             throw new IllegalArgumentException("Terminal ID cannot be null or empty");
         }
     }

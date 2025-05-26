@@ -3,5 +3,8 @@
     <img src="assets/bank-icon.png" alt="Bank" class="bank-icon" />
     <span class="bank-name">Simple Bank</span>
   </div>
-  <button class="logout-btn" (click)="logout()">Logout</button>
+  <button *ngIf="isSpecialRoute; else logoutBtn" (click)="goHome()">Home</button>
+  <ng-template #logoutBtn>
+    <button (click)="logout()">Logout</button>
+  </ng-template>
 </header>

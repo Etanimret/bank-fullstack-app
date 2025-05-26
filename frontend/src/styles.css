@@ -15,6 +15,46 @@ body {
   padding: 32px;
 }
 
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+select,
+textarea {
+  width: 100%;
+  padding: 10px 14px;
+  margin: 8px 0 20px 0;
+  border: 1px solid #cfd8dc;
+  border-radius: 6px;
+  font-size: 1rem;
+  background: #f9fafb;
+  box-sizing: border-box;
+  transition: border 0.2s;
+  display: block;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #1976d2;
+  outline: none;
+  background: #fff;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
 button {
   background: #1976d2;
   color: #fff;
@@ -24,6 +64,11 @@ button {
   font-size: 1rem;
   cursor: pointer;
   transition: background 0.2s;
+}
+
+form {
+  max-width: 500px;
+  margin: 0 auto;
 }
 
 button:hover {

@@ -1,5 +1,7 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
+CREATE SEQUENCE account_number_seq START 1 INCREMENT 1;
+
 CREATE TABLE customers (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     email VARCHAR(100) NOT NULL UNIQUE,
@@ -16,7 +18,7 @@ CREATE TABLE customers (
 CREATE TABLE accounts (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     account_number VARCHAR(7) NOT NULL UNIQUE,
-    customer_id UUID NOT NULL UNIQUE REFERENCES customers(id),
+    customer_id UUID NOT NULL REFERENCES customers(id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -30,5 +32,3 @@ CREATE TABLE statements (
     remarks VARCHAR(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
-CREATE SEQUENCE account_number_seq START 1 INCREMENT 1;

@@ -1,6 +1,8 @@
 package com.example.app.service.accounts;
 
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.example.app.repository.AccountsRepository;
 import com.example.app.model.entity.accounts.Account;
@@ -11,6 +13,7 @@ import com.example.app.repository.CustomersRepository;
 
 @Service
 public class CreateAccountService {
+    private static final Logger logger = LoggerFactory.getLogger(CreateAccountService.class);
     @Autowired
     private AccountsRepository accountsRepository;
 
@@ -23,11 +26,14 @@ public class CreateAccountService {
         try {
             Customer customer = customersRepository.findByCitizenId(citizenId);
             if (customer == null) {
+                logger.error("Customer not found with citizenId: {}", citizenId);
                 throw new RuntimeException("Customer not found with citizenId: " + citizenId);
             }
             Account newAccount = initialAccount(customer);
+            logger.info("New account created with ID: {}", newAccount.getId());
             result = "Successfully created account. New account number : " + newAccount.getAccountNumber();
         } catch (Exception e) {
+            logger.error("Error occurred while saving account: {}", e.getMessage());
             result = "Error occurred while saving account";
         }
         return result;

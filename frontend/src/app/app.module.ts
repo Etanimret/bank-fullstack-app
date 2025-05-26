@@ -17,6 +17,9 @@ import { BankStatementComponent } from './bank-statement/bank-statement.componen
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'customer-account', component: CustomerAccountComponent },
+  { path: 'transfer-funds', component: TransferFundsComponent },
+  { path: 'bank-statement', component: BankStatementComponent },
   { path: 'teller-create-account', component: TellerCreateAccountComponent },
   { path: 'teller-transaction', component: TellerTransactionComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' } //default route

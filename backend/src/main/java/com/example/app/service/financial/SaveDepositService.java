@@ -1,10 +1,11 @@
 package com.example.app.service.financial;
 
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 import com.example.app.repository.StatementsRepository;
 import com.example.app.repository.AccountsRepository;
@@ -16,23 +17,30 @@ import com.example.app.model.constant.ChannelCode;
 
 @Service
 public class SaveDepositService {
+    private static final Logger logger = LoggerFactory.getLogger(SaveDepositService.class);
     @Autowired
     private StatementsRepository statementsRepository;
 
     @Autowired
     private AccountsRepository accountsRepository;
 
-    public StatementDto invoke(String accountId, BigDecimal amount, String terminalId) {
-        validateInput(accountId, amount, terminalId);
-        return saveDeposit(accountId, amount, terminalId);
+    public StatementDto invoke(String accountNumber, BigDecimal amount, String terminalId) {
+        validateInput(accountNumber, amount, terminalId);
+        return saveDeposit(accountNumber, amount, terminalId);
     }
 
-    private StatementDto saveDeposit(String accountId, BigDecimal amount, String terminalId) {
-        UUID accountIdUuid = UUID.fromString(accountId);
-        Account account = accountsRepository.findById(accountIdUuid)
-            .orElseThrow(() -> new IllegalArgumentException("Invalid account ID"));
+    private StatementDto saveDeposit(String accountNumber, BigDecimal amount, String terminalId) {
+        Account account = accountsRepository.findByAccountNumber(accountNumber);
+        if (account == null) {
+            logger.error("Invalid account number");
+            throw new IllegalArgumentException("Invalid account number");
+        }
 
-        Statement lastStatement = statementsRepository.findTopByAccountIdOrderByCreatedAtDesc(accountIdUuid);
+        Statement lastStatement = statementsRepository.findTopByAccountIdOrderByCreatedAtDesc(account.getId());
+        if(lastStatement == null) {
+            lastStatement = new Statement();
+            lastStatement.setBalance(BigDecimal.ZERO);
+        }
 
         Statement statement = new Statement();
         statement.setAccount(account);
@@ -43,6 +51,7 @@ public class SaveDepositService {
         statement.setRemarks("Deposit via Terminal " + terminalId);
         statement.setCreatedAt(LocalDateTime.now());
 
+        logger.info("Saving deposit statement for account ID: {}, amount: {}, terminal ID: {}", account.getId(), amount, terminalId);
         statementsRepository.save(statement);
         
         return mapToStatementDto(statement);
@@ -61,14 +70,17 @@ public class SaveDepositService {
         return dto;
     }
 
-    private void validateInput(String accountId, BigDecimal amount, String terminalId) {
-        if (accountId == null || accountId.isEmpty()) {
-            throw new IllegalArgumentException("Account ID cannot be null or empty");
+    private void validateInput(String accountNumber, BigDecimal amount, String terminalId) {
+        if (accountNumber == null || accountNumber.isEmpty()) {
+            logger.error("Account Number cannot be null or empty");
+            throw new IllegalArgumentException("Account Number cannot be null or empty");
         }
         if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
+            logger.error("Amount must be greater than zero");
             throw new IllegalArgumentException("Amount must be greater than zero");
         }
         if (terminalId == null || terminalId.isEmpty()) {
+            logger.error("Terminal ID cannot be null or empty");
             throw new IllegalArgumentException("Terminal ID cannot be null or empty");
         }
     }

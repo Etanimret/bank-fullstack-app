@@ -1,20 +1,26 @@
-<input [(ngModel)]="citizenId" placeholder="Citizen ID" />
-<button (click)="createAccount()">Create Account</button>
-<button (click)="retrieveAccount()">Retrieve Account</button>
+<form class="form-group" style="max-width:400px;margin:32px auto;">
+  <label for="citizenId">Citizen ID</label>
+  <input id="citizenId" [(ngModel)]="citizenId" name="citizenId" placeholder="Citizen ID" />
 
-<div *ngIf="createMessage">{{ createMessage }}</div>
-<div *ngIf="createError" style="color:red">{{ createError }}</div>
+  <div style="display:flex; gap:12px; margin-bottom:16px;">
+    <button type="button" (click)="createAccount()">Create Account</button>
+    <button type="button" (click)="retrieveAccount()">Retrieve Account</button>
+  </div>
 
-<div *ngIf="customer">
-  <h3>Customer Info</h3>
+  <div *ngIf="createMessage" style="color:green; margin-bottom:8px;">{{ createMessage }}</div>
+  <div *ngIf="createError" style="color:red; margin-bottom:8px;">{{ createError }}</div>
+</form>
+
+<div *ngIf="customer" class="container" style="max-width:500px; margin:24px auto;">
+  <h3 style="margin-top:0;">Customer Info</h3>
   <div><strong>Id:</strong> {{ customer.citizenId }}</div>
   <div><strong>Thai Name:</strong> {{ customer.accountHolderNameTh }}</div>
   <div><strong>English Name:</strong> {{ customer.accountHolderNameEn }}</div>
   <div>
     <strong>Accounts:</strong>
-    <ul>
+    <ul style="margin: 8px 0 0 16px;">
       <li *ngFor="let acc of customer.accounts">{{ acc.accountNumber }}</li>
     </ul>
   </div>
 </div>
-<div *ngIf="retrieveError" style="color:red">{{ retrieveError }}</div>
+<div *ngIf="retrieveError" style="color:red; text-align:center; margin-top:12px;">{{ retrieveError }}</div>

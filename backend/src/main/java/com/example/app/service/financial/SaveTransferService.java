@@ -2,8 +2,9 @@ package com.example.app.service.financial;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.app.model.dto.financial.StatementDto;
@@ -18,34 +19,48 @@ import com.example.app.repository.StatementsRepository;
 
 @Service
 public class SaveTransferService {
-
+    private static final Logger logger = LoggerFactory.getLogger(SaveTransferService.class);
     @Autowired
     private StatementsRepository statementsRepository;
 
     @Autowired
     private AccountsRepository accountsRepository;
 
-    public StatementDto invoke(String selfAccountId, BigDecimal amount, String targetAccountId) {
-        validateInput(selfAccountId, amount, targetAccountId);
-        return saveTransfer(selfAccountId, amount, targetAccountId);
+    public StatementDto invoke(String selfAccountNumber, BigDecimal amount, String targetAccountNumber) {
+        validateInput(selfAccountNumber, amount, targetAccountNumber);
+        return saveTransfer(selfAccountNumber, amount, targetAccountNumber);
     }
 
-    private StatementDto saveTransfer(String selfAccountId, BigDecimal amount, String targetAccountId) {
-        UUID selfAccountUuid = UUID.fromString(selfAccountId);
-        UUID targetAccountUuid = UUID.fromString(targetAccountId);
+    private StatementDto saveTransfer(String selfAccountNumber, BigDecimal amount, String targetAccountNumber) {
+        Account selfAccount = accountsRepository.findByAccountNumber(selfAccountNumber);
+        if (selfAccount == null) {
+            logger.error("Invalid account number: {}", selfAccountNumber);
+            throw new IllegalArgumentException("Invalid account number");
+        }
 
-        Account selfAccount = accountsRepository.findById(selfAccountUuid)
-            .orElseThrow(() -> new IllegalArgumentException("Invalid account ID"));
-        Account targetAccount = accountsRepository.findById(targetAccountUuid)
-            .orElseThrow(() -> new IllegalArgumentException("Invalid target account ID"));
+        Account targetAccount = accountsRepository.findByAccountNumber(targetAccountNumber);
+        if (targetAccount == null) {
+            logger.error("Invalid target account number: {}", targetAccountNumber);
+            throw new IllegalArgumentException("Invalid target account number");
+        }
 
         Customer selfCustomer = selfAccount.getCustomer();
         Customer targetCustomer = targetAccount.getCustomer();
 
         Statement lastSelfStatement = statementsRepository.findTopByAccountIdOrderByCreatedAtDesc(selfAccount.getId());
+        if(lastSelfStatement == null) {
+            lastSelfStatement = new Statement();
+            lastSelfStatement.setBalance(BigDecimal.ZERO);
+        }
         Statement lastTargetStatement = statementsRepository.findTopByAccountIdOrderByCreatedAtDesc(targetAccount.getId());
+        if(lastTargetStatement == null) {
+            lastTargetStatement = new Statement();
+            lastTargetStatement.setBalance(BigDecimal.ZERO);
+        }
 
         if (lastSelfStatement.getBalance().compareTo(amount) < 0) {
+            logger.error("Insufficient balance for transfer. Account ID: {}, Balance: {}, Transfer Amount: {}", 
+                selfAccount.getId(), lastSelfStatement.getBalance(), amount);
             throw new IllegalArgumentException("Insufficient balance for transfer");
         }
 
@@ -67,7 +82,9 @@ public class SaveTransferService {
         targetStatement.setRemarks(buildDescription("Receive from", selfAccount, selfCustomer));
         targetStatement.setCreatedAt(LocalDateTime.now());
 
+        logger.info("Start save self statement");
         statementsRepository.save(selfStatement);
+        logger.info("Start save target statement");
         statementsRepository.save(targetStatement);
 
         return mapToStatementDto(selfStatement);
@@ -86,17 +103,21 @@ public class SaveTransferService {
         return dto;
     }
 
-    private void validateInput(String selfAccountId, BigDecimal amount, String targetAccountId) {
-        if (selfAccountId == null || selfAccountId.isEmpty()) {
-            throw new IllegalArgumentException("Account ID cannot be null or empty");
+    private void validateInput(String selfAccountNumber, BigDecimal amount, String targetAccountNumber) {
+        if (selfAccountNumber == null || selfAccountNumber.isEmpty()) {
+            logger.error("Account Number cannot be null or empty");
+            throw new IllegalArgumentException("Account Number cannot be null or empty");
         }
         if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
+            logger.error("Amount must be greater than zero");
             throw new IllegalArgumentException("Amount must be greater than zero");
         }
-        if (targetAccountId == null || targetAccountId.isEmpty()) {
-            throw new IllegalArgumentException("Target Account ID cannot be null or empty");
+        if (targetAccountNumber == null || targetAccountNumber.isEmpty()) {
+            logger.error("Target Account Number cannot be null or empty");
+            throw new IllegalArgumentException("Target Account Number cannot be null or empty");
         }
-        if (selfAccountId.equals(targetAccountId)) {
+        if (selfAccountNumber.equals(targetAccountNumber)) {
+            logger.error("Cannot transfer to the same account");
             throw new IllegalArgumentException("Cannot transfer to the same account");
         }
     }

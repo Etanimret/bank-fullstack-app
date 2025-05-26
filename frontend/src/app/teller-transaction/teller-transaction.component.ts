@@ -7,9 +7,9 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 })
 export class TellerTransactionComponent {
   type: 'deposit' | 'withdraw' = 'deposit';
-  accountId = '';
+  accountNumber = '';
   amount = '';
-  terminalId = '';
+  terminalId: string = '0101';
   message = '';
   error = '';
 
@@ -20,8 +20,8 @@ export class TellerTransactionComponent {
     this.error = '';
 
     // Validation
-    if (!/^\d{7}$/.test(this.accountId)) {
-      this.error = 'Account ID must be 7 digits.';
+    if (!/^\d{7}$/.test(this.accountNumber)) {
+      this.error = 'Account Number must be 7 digits.';
       return;
     }
     if (!/^\d+(\.\d{1,2})?$/.test(this.amount)) {
@@ -34,7 +34,7 @@ export class TellerTransactionComponent {
     }
 
     const params = new HttpParams()
-      .set('accountId', this.accountId)
+      .set('accountNumber', this.accountNumber)
       .set('amount', this.amount)
       .set('terminalId', this.terminalId);
 

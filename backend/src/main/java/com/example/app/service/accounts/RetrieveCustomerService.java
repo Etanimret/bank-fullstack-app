@@ -1,6 +1,8 @@
 package com.example.app.service.accounts;
 
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.example.app.repository.CustomersRepository;
 import com.example.app.repository.AccountsRepository;
@@ -14,6 +16,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class RetrieveCustomerService {
+    private static final Logger logger = LoggerFactory.getLogger(RetrieveCustomerService.class);
+
     @Autowired
     private CustomersRepository customersRepository;
     @Autowired
@@ -23,17 +27,20 @@ public class RetrieveCustomerService {
         try {
             Customer customer = customersRepository.findByCitizenId(citizenId);
             if (customer == null) {
+                logger.error("Citizen ID not found: {}", citizenId);
                 throw new RuntimeException("Citizen ID not found");
             }
             List<Account> accounts = accountsRepository.findAllByCustomer_Id(customer.getId());
             return mapToCustomerDto(customer, accounts);
         } catch (Exception e) {
+            logger.error("Error occurred while retrieving account: {}", e.getMessage());
             throw new RuntimeException("Error occurred while retrieving account");
         }
     }
 
     private CustomerDto mapToCustomerDto(Customer customer, List<Account> accounts) {
         CustomerDto customerDto = new CustomerDto();
+        customerDto.setId(customer.getId().toString());
         customerDto.setEmail(customer.getEmail());
         customerDto.setCitizenId(customer.getCitizenId());
         customerDto.setGender(TitleGenderCode.valueOf(customer.getGender()));
