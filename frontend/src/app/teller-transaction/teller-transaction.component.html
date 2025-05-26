@@ -1,0 +1,25 @@
+<div>
+  <label>
+    <input type="radio" name="type" value="deposit" [(ngModel)]="type" /> Deposit
+  </label>
+  <label>
+    <input type="radio" name="type" value="withdraw" [(ngModel)]="type" /> Withdraw
+  </label>
+</div>
+
+<div>
+  <label>Account ID (7 digits):</label>
+  <input [(ngModel)]="accountId" maxlength="7" />
+</div>
+<div>
+  <label>Amount (2 decimals):</label>
+  <input [(ngModel)]="amount" />
+</div>
+<div>
+  <label>Terminal ID (4 digits):</label>
+  <input [(ngModel)]="terminalId" maxlength="4" />
+</div>
+<button (click)="confirm()">Confirm</button>
+
+<div *ngIf="message" style="color:green">{{ message }}</div>
+<div *ngIf="error" style="color:red">{{ error }}</div>

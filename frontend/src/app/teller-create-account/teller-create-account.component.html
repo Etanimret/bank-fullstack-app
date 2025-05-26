@@ -1,0 +1,20 @@
+<input [(ngModel)]="citizenId" placeholder="Citizen ID" />
+<button (click)="createAccount()">Create Account</button>
+<button (click)="retrieveAccount()">Retrieve Account</button>
+
+<div *ngIf="createMessage">{{ createMessage }}</div>
+<div *ngIf="createError" style="color:red">{{ createError }}</div>
+
+<div *ngIf="customer">
+  <h3>Customer Info</h3>
+  <div><strong>Id:</strong> {{ customer.citizenId }}</div>
+  <div><strong>Thai Name:</strong> {{ customer.accountHolderNameTh }}</div>
+  <div><strong>English Name:</strong> {{ customer.accountHolderNameEn }}</div>
+  <div>
+    <strong>Accounts:</strong>
+    <ul>
+      <li *ngFor="let acc of customer.accounts">{{ acc.accountNumber }}</li>
+    </ul>
+  </div>
+</div>
+<div *ngIf="retrieveError" style="color:red">{{ retrieveError }}</div>

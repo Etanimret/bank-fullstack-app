@@ -8,12 +8,15 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import com.example.app.service.financial.RetrieveAllStatementService;
 import com.example.app.service.financial.SaveDepositService;
 import com.example.app.service.financial.SaveWithdrawService;
+import com.example.app.service.financial.VerifyTransferService;
 import com.example.app.service.financial.SaveTransferService;
 import com.example.app.model.dto.financial.StatementDto;
+import com.example.app.model.dto.financial.VerifyStatementDto;
 
 @RestController
 public class StatmentsController {
@@ -25,10 +28,12 @@ public class StatmentsController {
     private SaveWithdrawService saveWithdrawService;
     @Autowired
     private SaveTransferService saveTransferService;
+    @Autowired
+    private VerifyTransferService verifyTransferService;
 
     @GetMapping("/financial/retrieveAllStatements")
-    public ResponseEntity<List<StatementDto>> getAllStatements(@RequestParam String accountId) {
-        return ResponseEntity.ok(retrieveAllStatementService.invoke(accountId));
+    public ResponseEntity<List<StatementDto>> getAllStatements(@RequestParam String accountId, @RequestParam LocalDateTime fromDate, @RequestParam LocalDateTime toDate) {
+        return ResponseEntity.ok(retrieveAllStatementService.invoke(accountId, fromDate, toDate));
     }
 
     @PostMapping("/financial/deposit")
@@ -44,5 +49,10 @@ public class StatmentsController {
     @PostMapping("/financial/transfer")
     public ResponseEntity<StatementDto> transfer(@RequestParam String selfAccountId, @RequestParam BigDecimal amount, @RequestParam String targetAccountId) {
         return ResponseEntity.ok(saveTransferService.invoke(selfAccountId, amount, targetAccountId));
+    }
+
+    @PostMapping("/financial/verify-transfer")
+    public ResponseEntity<VerifyStatementDto> verifyTransfer(@RequestParam String selfAccountId, @RequestParam BigDecimal amount, @RequestParam String targetAccountId) {
+        return ResponseEntity.ok(verifyTransferService.invoke(selfAccountId, amount, targetAccountId));
     }
 }

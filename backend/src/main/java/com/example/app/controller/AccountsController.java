@@ -14,6 +14,7 @@ import com.example.app.service.accounts.CreateAccountService;
 import com.example.app.service.accounts.LoginAccountService;
 import com.example.app.service.accounts.RegisterCustomerService;
 import com.example.app.service.accounts.RetrieveCustomerAccountService;
+import com.example.app.service.accounts.RetrieveCustomerService;
 
 @RestController
 public class AccountsController {
@@ -25,6 +26,8 @@ public class AccountsController {
     private RetrieveCustomerAccountService retrieveCustomerAccountService;
     @Autowired
     private LoginAccountService loginAccountService;
+    @Autowired
+    private RetrieveCustomerService retrieveCustomerService;
 
     @PostMapping("/customer/register-account")
     public ResponseEntity<String> registerAccount(@RequestBody CustomerDto customerDto) {
@@ -41,12 +44,21 @@ public class AccountsController {
         return ResponseEntity.ok(retrieveCustomerAccountService.invoke(email, password));
     }
 
-    @GetMapping("/customer/login")
+    @PostMapping("/customer/login")
     public ResponseEntity<Boolean> login(@RequestParam String email, @RequestParam String password) {
         try {
             return ResponseEntity.ok(loginAccountService.invoke(email, password));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
+        }
+    }
+
+    @GetMapping("/teller/retrieve-account")
+    public ResponseEntity<CustomerDto> retrieveAccountByCitizenId(@RequestParam String citizenId) {
+        try {
+            return ResponseEntity.ok(retrieveCustomerService.invoke(citizenId));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
 }

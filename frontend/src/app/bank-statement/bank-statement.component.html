@@ -1,0 +1,24 @@
+<div>
+  <h2>Bank Statements</h2>
+  <label for="monthPicker">Select Month:</label>
+  <input type="month" id="monthPicker" [(ngModel)]="selectedMonth" (change)="retrieveStatements()" />
+
+  <table *ngIf="statements.length > 0">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Description</th>
+        <th>Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let statement of statements">
+        <td>{{ statement.date }}</td>
+        <td>{{ statement.description }}</td>
+        <td>{{ statement.amount | currency }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="statements.length === 0">No statements available for the selected month.</p>
+</div>

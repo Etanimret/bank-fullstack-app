@@ -23,7 +23,7 @@ export class RegisterComponent {
   register() {
     this.registerError = '';
     this.registerSuccess = '';
-    this.http.post<string>('http://localhost:8080/customer/register-account', this.customer)
+    this.http.post('/api/customer/register-account', this.customer)
       .subscribe({
         next: (msg) => {
           this.registerSuccess = 'Account created successfully!';

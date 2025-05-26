@@ -1,0 +1,17 @@
+<div>
+  <h1>Your Account Numbers</h1>
+  <div *ngIf="accounts.length > 0; else noAccounts">
+    <h2>Available Accounts:</h2>
+    <ul>
+      <li *ngFor="let account of accounts">{{ account.accountNumber }}</li>
+    </ul>
+  </div>
+  <ng-template #noAccounts>
+    <p>No accounts available. Please visit the bank for assistance.</p>
+  </ng-template>
+  
+  <div class="navigation-buttons">
+    <button (click)="navigateToTransferFunds()">Transfer Funds</button>
+    <button (click)="navigateToBankStatement()">Retrieve Bank Statement</button>
+  </div>
+</div>

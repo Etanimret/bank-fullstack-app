@@ -14,10 +14,11 @@ export class LoginComponent {
   constructor(private http: HttpClient, private router: Router) {}
 
   login() {
-    this.http.post<boolean>('/customer/login', {
-      email: this.email,
-      password: this.password
-    }).subscribe({
+    this.http.post<boolean>(
+      '/api/customer/login',
+      null,
+      { params: { email: this.email, password: this.password } }
+    ).subscribe({
       next: (result) => {
         if (result) {
           this.loginError = '';

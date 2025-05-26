@@ -3,12 +3,16 @@ package com.example.app.service.accounts;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.example.app.repository.CustomersRepository;
+import com.example.app.repository.StatementsRepository;
 import com.example.app.repository.AccountsRepository;
 import com.example.app.model.dto.account.CustomerDto;
 import com.example.app.model.entity.accounts.Account;
 import com.example.app.model.entity.accounts.Customer;
+import com.example.app.model.entity.financial.Statement;
 import com.example.app.model.dto.account.AccountDto;
 import com.example.app.model.constant.TitleGenderCode;
+
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,6 +22,8 @@ public class RetrieveCustomerAccountService {
     private CustomersRepository customersRepository;
     @Autowired
     private AccountsRepository accountsRepository;
+    @Autowired
+    private StatementsRepository statementsRepository;
 
     public CustomerDto invoke(String email, String password) {
         try {
@@ -35,19 +41,34 @@ public class RetrieveCustomerAccountService {
     private CustomerDto mapToCustomerDto(Customer customer, List<Account> accounts) {
         CustomerDto customerDto = new CustomerDto();
         customerDto.setEmail(customer.getEmail());
+        customerDto.setPassword(maskPassword(customer.getPassword()));
         customerDto.setCitizenId(customer.getCitizenId());
         customerDto.setGender(TitleGenderCode.valueOf(customer.getGender()));
         customerDto.setAccountHolderNameTh(customer.getAccountHolderNameTh());
         customerDto.setAccountHolderNameEn(customer.getAccountHolderNameEn());
-        customerDto.setPin(customer.getPin());
+        customerDto.setPin(maskPassword(customer.getPin()));
         customerDto.setAccounts(accounts.stream()
                 .map(account -> {
                     AccountDto accountDto = new AccountDto();
                     accountDto.setId(account.getId().toString());
+                    accountDto.setBalance(enrichAccountsWithBalance(account));
                     accountDto.setAccountNumber(account.getAccountNumber());
                     return accountDto;
                 })
                 .collect(Collectors.toList()));
         return customerDto;
+    }
+
+    private String maskPassword(String password) {
+        return password.replaceAll(".", "*");
+    }
+
+    private BigDecimal enrichAccountsWithBalance(Account account) {
+        Statement statement = statementsRepository.findTopByAccountIdOrderByCreatedAtDesc(account.getId());
+        if (statement != null) {
+            return statement.getBalance();
+        } else {
+            return BigDecimal.ZERO;
+        }
     }
 }

@@ -1,0 +1,24 @@
+<div>
+  <h2>Transfer Funds</h2>
+  <form (ngSubmit)="verifyTransfer()">
+    <div>
+      <label for="accountNumber">Account Number:</label>
+      <input type="text" id="accountNumber" [(ngModel)]="accountNumber" name="accountNumber" required>
+    </div>
+    <div>
+      <label for="amount">Amount:</label>
+      <input type="number" id="amount" [(ngModel)]="amount" name="amount" required>
+    </div>
+    <button type="submit">Verify Transfer</button>
+  </form>
+
+  <div *ngIf="verificationMessage">
+    <p>{{ verificationMessage }}</p>
+  </div>
+
+  <button (click)="transferFunds()">Transfer Funds</button>
+
+  <div *ngIf="transferMessage">
+    <p>{{ transferMessage }}</p>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+/* Styles for the Customer Account Component */
+.customer-account {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.account-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.account-item {
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.no-accounts-message {
+  color: #ff0000;
+  font-weight: bold;
+}
+
+.button {
+  margin-top: 20px;
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}

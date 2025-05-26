@@ -25,8 +25,8 @@ public class CreateAccountService {
             if (customer == null) {
                 throw new RuntimeException("Customer not found with citizenId: " + citizenId);
             }
-            initialAccount(customer);
-            result = "Success";
+            Account newAccount = initialAccount(customer);
+            result = "Successfully created account. New account number : " + newAccount.getAccountNumber();
         } catch (Exception e) {
             result = "Error occurred while saving account";
         }
