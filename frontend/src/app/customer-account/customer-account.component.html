@@ -3,7 +3,15 @@
   <div *ngIf="accounts.length > 0; else noAccounts">
     <h2>Available Accounts:</h2>
     <ul>
-      <li *ngFor="let account of accounts">{{ account.accountNumber }}</li>
+      <li 
+        *ngFor="let account of accounts" 
+        (click)="selectedAccount = account"
+        [class.selected]="selectedAccount === account"
+        style="cursor:pointer"
+      >
+        {{ account.accountNumber }}
+        <span *ngIf="selectedAccount === account">✔</span>
+      </li>
     </ul>
   </div>
   <ng-template #noAccounts>
@@ -11,7 +19,15 @@
   </ng-template>
   
   <div class="navigation-buttons">
-    <button (click)="navigateToTransferFunds()">Transfer Funds</button>
-    <button (click)="navigateToBankStatement()">Retrieve Bank Statement</button>
+    <button 
+      [disabled]="!selectedAccount" 
+      (click)="navigateToTransferFunds(selectedAccount)">
+      Transfer Funds
+    </button>
+    <button 
+      [disabled]="!selectedAccount" 
+      (click)="navigateToBankStatement(selectedAccount)">
+      Retrieve Bank Statement
+    </button>
   </div>
 </div>

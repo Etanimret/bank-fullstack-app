@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { AuthService } from '../authen/authService';
 
 @Component({
   selector: 'app-customer-account',
@@ -7,28 +8,50 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./customer-account.component.css']
 })
 export class CustomerAccountComponent implements OnInit {
-  accountNumbers: string[] = [];
+  accounts: any[] = [];
+  selectedAccount: any = null;
   message: string = '';
+  router: any;
 
-  constructor(private http: HttpClient) {}
+  email: string = '';
+  password: string = '';
+
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
   ngOnInit(): void {
+    this.email = this.authService.getEmail();
+    this.password = this.authService.getPassword();
     this.retrieveAccountNumbers();
   }
 
   retrieveAccountNumbers(): void {
-    this.http.get<string[]>('/customer/retrieve-account')
+    const params = new HttpParams()
+      .set('email', this.email)
+      .set('password', this.password);
+
+    this.http.get<any>('/api/customer/retrieve-account', { params })
       .subscribe({
-        next: (accounts) => {
-          if (accounts.length > 0) {
-            this.accountNumbers = accounts;
+        next: (customer) => {
+          if (customer.accounts && customer.accounts.length > 0) {
+            this.accounts = customer.accounts;
+            this.message = '';
           } else {
-            this.message = 'No accounts available. Please visit the bank.';
+            this.accounts = [];
+            this.message = 'Please go to bank and open account with teller';
           }
         },
         error: () => {
+          this.accounts = [];
           this.message = 'Error retrieving account information. Please try again later.';
         }
       });
+  }
+
+  navigateToTransferFunds(selectedAccount: any): void {
+    this.router.navigate(['/transfer-funds'], { state: { selectedAccount } });
+  }
+
+  navigateToBankStatement(selectedAccount: any): void {
+    this.router.navigate(['/bank-statement'], { state: { selectedAccount } });
   }
 }

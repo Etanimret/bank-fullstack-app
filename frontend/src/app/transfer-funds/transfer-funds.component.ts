@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-transfer-funds',
@@ -7,70 +8,101 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./transfer-funds.component.css']
 })
 export class TransferFundsComponent {
-  accountNumber = '';
-  balance = 0;
-  transferAmount = '';
-  error = '';
-  successMessage = '';
+  selectedAccount: any = null;
+  balance: number = 0;
+  accountNumber: string = '';
+  targetAccountNumber: string = '';
+  amount: string = '';
+  pin: string = '';
+  verifyResult: any = null;
+  error: string = '';
+  successMessage: string = '';
+  isVerifying: boolean = false;
+  isTransferring: boolean = false;
 
-  constructor(private http: HttpClient) {
-    this.retrieveAccountInfo();
+  constructor(private http: HttpClient, private router: Router) {
+    const nav = this.router.getCurrentNavigation();
+    this.selectedAccount = nav?.extras?.state?.selectedAccount || null;
+    if (this.selectedAccount) {
+      this.balance = this.selectedAccount.balance;
+      this.accountNumber = this.selectedAccount.accountNumber;
+    }
   }
 
-  retrieveAccountInfo() {
-    this.http.get<{ accountNumber: string; balance: number }>('/customer/retrieve-account')
-      .subscribe({
-        next: (data) => {
-          this.accountNumber = data.accountNumber;
-          this.balance = data.balance;
-        },
-        error: () => {
-          this.error = 'Failed to retrieve account information.';
-        }
-      });
+  formatMoney(value: number | string): string {
+    if (value === null || value === undefined) return '';
+    return (+value).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   }
 
-  validateTransfer() {
-    const amount = parseFloat(this.transferAmount);
-    if (isNaN(amount) || amount <= 0) {
-      this.error = 'Transfer amount must be a positive number.';
-      return false;
-    }
-    if (amount > this.balance) {
-      this.error = 'Insufficient balance for this transfer.';
-      return false;
-    }
+  verifyTransfer() {
     this.error = '';
-    return true;
-  }
+    this.successMessage = '';
+    this.verifyResult = null;
 
-  transferFunds() {
-    if (!this.validateTransfer()) {
+    if (!/^\d{7}$/.test(this.targetAccountNumber)) {
+      this.error = 'Target account number must be 7 digits.';
+      return;
+    }
+    if (!/^\d+(\.\d{1,2})?$/.test(this.amount)) {
+      this.error = 'Amount must be a valid number with up to two decimals.';
       return;
     }
 
-    this.http.post('/financial/verify-transfer', { accountNumber: this.accountNumber, amount: this.transferAmount })
+    this.isVerifying = true;
+    const params = new HttpParams()
+      .set('selfAccountId', this.accountNumber)
+      .set('amount', this.amount)
+      .set('targetAccountId', this.targetAccountNumber);
+
+    this.http.post<any>('/api/financial/verify-transfer', null, { params })
       .subscribe({
-        next: () => {
-          this.successMessage = 'Transfer verified. Proceeding with the transfer.';
-          this.executeTransfer();
+        next: (res) => {
+          this.verifyResult = res;
+          if (!res.isValid) {
+            this.error = res.message || 'Transfer verification failed.';
+          }
+          this.isVerifying = false;
         },
         error: () => {
-          this.error = 'Transfer verification failed. Please check your input.';
+          this.error = 'Failed to verify transfer.';
+          this.isVerifying = false;
         }
       });
   }
 
-  executeTransfer() {
-    this.http.post('/financial/transfer', { accountNumber: this.accountNumber, amount: this.transferAmount })
+  confirmTransfer() {
+    this.error = '';
+    this.successMessage = '';
+
+    if (!this.verifyResult?.isValid) {
+      this.error = 'Please verify a valid transfer before confirming.';
+      return;
+    }
+    if (!/^\d{6}$/.test(this.pin)) {
+      this.error = 'PIN must be 6 digits.';
+      return;
+    }
+
+    this.isTransferring = true;
+    const params = new HttpParams()
+      .set('selfAccountId', this.accountNumber)
+      .set('amount', this.amount)
+      .set('targetAccountId', this.targetAccountNumber);
+
+    this.http.post<any>('/api/financial/transfer', null, { params })
       .subscribe({
-        next: () => {
-          this.successMessage = 'Transfer successful!';
-          this.transferAmount = '';
-          this.retrieveAccountInfo(); // Refresh balance after transfer
+        next: (res) => {
+          this.successMessage = 'Transfer success';
+          this.balance = res.balance;
+          this.pin = '';
+          this.verifyResult = null;
+          this.amount = '';
+          this.targetAccountNumber = '';
+          this.isTransferring = false;
         },
         error: () => {
           this.error = 'Transfer failed. Please try again.';
+          this.isTransferring = false;
         }
       });
   }

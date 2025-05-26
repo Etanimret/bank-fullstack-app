@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { AuthService } from '../authen/authService';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,11 @@ export class LoginComponent {
   password = '';
   loginError = '';
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
   login() {
     this.http.post<boolean>(
@@ -22,7 +27,9 @@ export class LoginComponent {
       next: (result) => {
         if (result) {
           this.loginError = '';
+          this.authService.setCredentials(this.email, this.password);
           alert('Login successful!');
+          this.router.navigate(['/customer-account']);
         } else {
           this.loginError = 'Invalid credentials';
         }
