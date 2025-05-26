@@ -1,39 +1,54 @@
-<div class="transfer-container" style="max-width:400px; margin:32px auto; padding:24px; background:#fff; border-radius:10px; box-shadow:0 2px 12px rgba(0,0,0,0.06);">
-  <div style="margin-bottom:18px;">
-    <div style="font-weight:500;">Balance: {{ formatMoney(balance) }}</div>
-    <div style="color:#555;">Account: {{ accountNumber }}</div>
-  </div>
-  <div style="margin-bottom:16px;">
-    <label for="targetAccount">Transfer to account</label>
-    <input id="targetAccount" maxlength="7" [(ngModel)]="targetAccountNumber" placeholder="7 digits" />
-  </div>
-  <div style="margin-bottom:16px;">
-    <label for="amount">Amount</label>
-    <input id="amount" [(ngModel)]="amount" placeholder="0.00" />
-  </div>
-  <button style="margin-bottom:16px;" (click)="verifyTransfer()" [disabled]="isVerifying">Verify</button>
-
-  <div *ngIf="verifyResult && verifyResult.isValid" class="verify-success" style="background:#e8f5e9; border-radius:6px; padding:12px; margin-bottom:12px;">
-    <div>
-      {{ verifyResult.selfName }}<br>
-      {{ verifyResult.selfAccountNumber }}
-      <span style="font-weight:bold; margin: 0 10px;">&#8594;</span>
-      {{ verifyResult.targetName }}<br>
-      {{ verifyResult.targetAccountNumber }}
+  <form autocomplete="off">
+    <h1>Transfer Funds</h1>
+    <div class="transfer-container" style="max-width:400px; margin:32px auto; padding:24px; background:#fff; border-radius:10px; box-shadow:0 2px 12px rgba(0,0,0,0.06);">
+    <div style="margin-bottom:18px;">
+      <div style="font-weight:500;">Balance: {{ formatMoney(balance) }}</div>
+      <div style="color:#555;">Account: {{ accountNumber }}</div>
     </div>
-    <div style="text-align:center; font-size:1.2em; margin: 8px 0;">
-      {{ formatMoney(verifyResult.amount) }}
+    <div style="margin-bottom:16px;">
+      <label for="targetAccount">Transfer to account</label>
+      <input id="targetAccount" maxlength="7" [(ngModel)]="targetAccountNumber" name="targetAccountNumber" placeholder="7 digits" />
     </div>
-  </div>
-  <div *ngIf="verifyResult && !verifyResult.isValid" class="verify-error" style="color:red; margin-bottom:12px;">
-    {{ verifyResult.message }}
-  </div>
-  <div *ngIf="error" style="color:red; margin-bottom:8px;">{{ error }}</div>
-  <div *ngIf="successMessage" style="color:green; margin-bottom:8px;">{{ successMessage }}</div>
+    <div style="margin-bottom:16px;">
+      <label for="amount">Amount</label>
+      <input id="amount" [(ngModel)]="amount" name="amount" placeholder="0.00" />
+    </div>
+    <button type="button" style="margin-bottom:16px;" (click)="verifyTransfer()" [disabled]="isVerifying">Verify</button>
 
-  <div style="margin-bottom:16px;">
-    <label for="pin">PIN</label>
-    <input id="pin" type="password" maxlength="6" [(ngModel)]="pin" [disabled]="!verifyResult?.isValid" />
+    <div *ngIf="verifyResult && verifyResult.isValid" class="verify-success" style="background:#e8f5e9; border-radius:6px; padding:12px; margin-bottom:12px;">
+      <div style="display: flex; align-items: center; justify-content: space-between; font-size: 1.1em; font-weight: 500;">
+        <div style="flex:1; text-align:left;">
+          {{ verifyResult.selfName }}
+        </div>
+        <div style="flex:0 0 auto; text-align:center; min-width:70px;">
+          {{ formatMoney(verifyResult.amount) }}
+        </div>
+        <div style="flex:1; text-align:right;">
+          {{ verifyResult.targetName }}
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 2px;">
+        <div style="flex:1; text-align:left; color:#555;">
+          {{ verifyResult.selfAccountNumber }}
+        </div>
+        <div style="flex:0 0 auto; text-align:center; min-width:40px; font-size:1.2em; font-weight:bold;">
+          &#8594;
+        </div>
+        <div style="flex:1; text-align:right; color:#555;">
+          {{ verifyResult.targetAccountNumber }}
+        </div>
+      </div>
+    </div>
+    <div *ngIf="verifyResult && !verifyResult.isValid" class="verify-error" style="color:red; margin-bottom:12px;">
+      {{ verifyResult.message }}
+    </div>
+    <div *ngIf="error" style="color:red; margin-bottom:8px;">{{ error }}</div>
+    <div *ngIf="successMessage" style="color:green; margin-bottom:8px;">{{ successMessage }}</div>
+
+    <div style="margin-bottom:16px;">
+      <label for="pin">PIN</label>
+      <input id="pin" type="password" maxlength="6" [(ngModel)]="pin" name="pin" [disabled]="!verifyResult?.isValid" />
+    </div>
+    <button type="button" (click)="confirmTransfer()" [disabled]="!verifyResult?.isValid || isTransferring">Confirm</button>
   </div>
-  <button (click)="confirmTransfer()" [disabled]="!verifyResult?.isValid || isTransferring">Confirm</button>
-</div>
+</form>
