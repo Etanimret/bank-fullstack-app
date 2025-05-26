@@ -1,7 +1,0 @@
-module.exports = {
-  "/api": {
-    target: "http://backend:8080",
-    secure: false,
-    changeOrigin: true
-  }
-};

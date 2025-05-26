@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,6 +18,7 @@ import com.example.app.service.accounts.RetrieveCustomerAccountService;
 import com.example.app.service.accounts.RetrieveCustomerService;
 
 @RestController
+@RequestMapping("/api")
 public class AccountsController {
     @Autowired
     private RegisterCustomerService registerCustomerService;
@@ -31,12 +33,22 @@ public class AccountsController {
 
     @PostMapping("/customer/register-account")
     public ResponseEntity<String> registerAccount(@RequestBody CustomerDto customerDto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(registerCustomerService.invoke(customerDto));
+        try {
+            return ResponseEntity.status(HttpStatus.CREATED).body(registerCustomerService.invoke(customerDto));
+        }
+        catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
     @PostMapping("/teller/create-account")
     public ResponseEntity<String> createAccount(@RequestParam String citizenId) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(createAccountService.invoke(citizenId));
+        try {
+            return ResponseEntity.status(HttpStatus.CREATED).body(createAccountService.invoke(citizenId));
+        }
+        catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
     @GetMapping("/customer/retrieve-account")

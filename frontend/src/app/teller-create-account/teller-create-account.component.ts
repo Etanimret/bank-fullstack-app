@@ -3,7 +3,8 @@ import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-teller-create-account',
-  templateUrl: './teller-create-account.component.html'
+  templateUrl: './teller-create-account.component.html',
+  styleUrls: ['./teller-create-account.component.css']
 })
 export class TellerCreateAccountComponent {
   citizenId = '';

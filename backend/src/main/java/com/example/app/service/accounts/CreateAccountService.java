@@ -27,14 +27,14 @@ public class CreateAccountService {
             Customer customer = customersRepository.findByCitizenId(citizenId);
             if (customer == null) {
                 logger.error("Customer not found with citizenId: {}", citizenId);
-                throw new RuntimeException("Customer not found with citizenId: " + citizenId);
+                throw new IllegalArgumentException("Customer not found with citizenId: " + citizenId);
             }
             Account newAccount = initialAccount(customer);
             logger.info("New account created with ID: {}", newAccount.getId());
             result = "Successfully created account. New account number : " + newAccount.getAccountNumber();
         } catch (Exception e) {
             logger.error("Error occurred while saving account: {}", e.getMessage());
-            result = "Error occurred while saving account";
+            throw new IllegalArgumentException("Error occurred while saving account");
         }
         return result;
     }

@@ -1,9 +1,11 @@
 package com.example.app.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -19,6 +21,7 @@ import com.example.app.model.dto.financial.StatementDto;
 import com.example.app.model.dto.financial.VerifyStatementDto;
 
 @RestController
+@RequestMapping("/api")
 public class StatmentsController {
     @Autowired
     private RetrieveAllStatementService retrieveAllStatementService;
@@ -32,7 +35,11 @@ public class StatmentsController {
     private VerifyTransferService verifyTransferService;
 
     @GetMapping("/financial/retrieveAllStatements")
-    public ResponseEntity<List<StatementDto>> getAllStatements(@RequestParam String accountNumber, @RequestParam LocalDateTime fromDate, @RequestParam LocalDateTime toDate) {
+    public ResponseEntity<List<StatementDto>> getAllStatements(
+        @RequestParam String accountNumber,
+        @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fromDate,
+        @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime toDate
+    ) {
         return ResponseEntity.ok(retrieveAllStatementService.invoke(accountNumber, fromDate, toDate));
     }
 

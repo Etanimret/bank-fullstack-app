@@ -24,7 +24,7 @@ public class RegisterCustomerService {
             Boolean existingAccount = customersRepository.existsByCitizenId(customerDto.getCitizenId());
             logger.info("Checking if account exists with citizenId result {}", existingAccount);
             if (existingAccount == true) {
-                result = "Account already exists";
+                throw new IllegalArgumentException("Account already exists");
             } else {
                 validateCustomerDto(customerDto);
                 customersRepository.save(registerCustomer(customerDto));
@@ -32,7 +32,7 @@ public class RegisterCustomerService {
             }
         } catch (Exception e) {
             logger.error("Error occurred while saving account: {}", e.getMessage());
-            result = "Error occurred while saving account";
+            throw new IllegalArgumentException("Error occurred while saving account");
         }
         return result;
     }

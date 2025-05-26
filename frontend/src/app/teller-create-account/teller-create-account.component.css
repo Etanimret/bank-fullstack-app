@@ -1,0 +1,33 @@
+.form-center {
+  max-width: 400px;
+  margin: 32px auto;
+}
+.flex-buttons {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.success-message {
+  color: green;
+  margin-bottom: 8px;
+}
+.error-message {
+  color: red;
+  margin-bottom: 8px;
+}
+.container {
+  max-width: 500px;
+  margin: 24px auto;
+}
+.mt-0 {
+  margin-top: 0;
+}
+ul.account-list {
+  margin: 8px 0 0 16px;
+}
+.text-center {
+  text-align: center;
+}
+.mt-12 {
+  margin-top: 12px;
+}

@@ -1,24 +1,35 @@
-<div>
-  <h2>Bank Statements</h2>
+<form #statementForm="ngForm">
+  <h1>Bank Statements</h1>
   <label for="monthPicker">Select Month:</label>
-  <input type="month" id="monthPicker" [(ngModel)]="selectedMonth" (change)="retrieveStatements()" />
+  <input type="month" id="monthPicker" [(ngModel)]="selectedMonth" name="selectedMonth" (change)="retrieveStatements()" />
 
   <table *ngIf="statements.length > 0">
     <thead>
       <tr>
         <th>Date</th>
-        <th>Description</th>
-        <th>Amount</th>
+        <th>Time</th>
+        <th>Code</th>
+        <th>Channel</th>
+        <th>Debit/Credit</th>
+        <th>Balance</th>
+        <th>Remark</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let statement of statements">
-        <td>{{ statement.date }}</td>
-        <td>{{ statement.description }}</td>
-        <td>{{ statement.amount | currency }}</td>
+        <td>{{ statement.createdAt | date:'dd/MM/yy' }}</td>
+        <td>{{ statement.createdAt | date:'HH:mm' }}</td>
+        <td>{{ statement.code }}</td>
+        <td>{{ statement.channel }}</td>
+        <td>
+          <span *ngIf="statement.amount >= 0">+{{ statement.amount | number:'1.2-2' }}</span>
+          <span *ngIf="statement.amount < 0">{{ statement.amount | number:'1.2-2' }}</span>
+        </td>
+        <td>{{ statement.balance | number:'1.2-2' }}</td>
+        <td>{{ statement.remarks }}</td>
       </tr>
     </tbody>
   </table>
 
   <p *ngIf="statements.length === 0">No statements available for the selected month.</p>
-</div>
+</form>

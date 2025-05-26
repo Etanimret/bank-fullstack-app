@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { AuthService } from '../authen/authService';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-customer-account',
@@ -11,12 +12,11 @@ export class CustomerAccountComponent implements OnInit {
   accounts: any[] = [];
   selectedAccount: any = null;
   message: string = '';
-  router: any;
 
   email: string = '';
   password: string = '';
 
-  constructor(private http: HttpClient, private authService: AuthService) {}
+  constructor(private http: HttpClient, private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.email = this.authService.getEmail();

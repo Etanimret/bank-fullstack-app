@@ -1,13 +1,13 @@
-<div>
-  <h1>Your Account Numbers</h1>
+<form #accountForm="ngForm">
+  <h1>Your Account</h1>
   <div *ngIf="accounts.length > 0; else noAccounts">
-    <h2>Available Accounts:</h2>
+    <h1>Available Accounts:</h1>
     <ul>
       <li 
         *ngFor="let account of accounts" 
         (click)="selectedAccount = account"
         [class.selected]="selectedAccount === account"
-        style="cursor:pointer"
+        class="account-item"
       >
         {{ account.accountNumber }}
         <span *ngIf="selectedAccount === account">✔</span>
@@ -30,4 +30,4 @@
       Retrieve Bank Statement
     </button>
   </div>
-</div>
+</form>
