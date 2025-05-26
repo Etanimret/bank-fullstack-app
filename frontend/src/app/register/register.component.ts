@@ -21,22 +21,20 @@ export class RegisterComponent {
   constructor(private http: HttpClient) {}
 
   register() {
-  this.registerError = '';
-  this.registerSuccess = '';
-  this.http.post('/api/customer/register-account', this.customer, { observe: 'response' })
-    .subscribe({
-      next: (response) => {
-        console.log("Response" + response);
-        if (response && (response.status === 201 || response.status === 200 || response.ok)) {
-          this.registerSuccess = 'Account created successfully!';
-        } else {
-          this.registerError = 'Registration failed.';
+    this.registerError = '';
+    this.registerSuccess = '';
+    this.http.post('/api/customer/register-account', this.customer, { observe: 'response', responseType: 'text' })
+      .subscribe({
+        next: (response) => {
+          if (response.status === 201 && response.body === 'Register success') {
+            this.registerSuccess = 'Account created successfully!';
+          } else {
+            this.registerError = 'Registration failed.';
+          }
+        },
+        error: (err) => {
+          this.registerError = err.error?.message || 'Registration failed.';
         }
-      },
-      error: (err) => {
-        console.log("Error" + err);
-        this.registerError = err.error?.message || 'Registration failed.';
-      }
-    });
-}
+      });
+  }
 }
